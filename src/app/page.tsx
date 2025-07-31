@@ -1,13 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { PlusIcon } from "lucide-react";
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { MainButton } from './components/MainButton';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion";
 
 export default function Home() {
@@ -674,16 +673,9 @@ export default function Home() {
         <Accordion type="single" collapsible className="w-full" defaultValue="1">
           {faqItems.map((item) => (
             <AccordionItem value={item.id} key={item.id} className="py-4 border-b border-gray-300 last:border-b-0">
-              <AccordionPrimitive.Header className="flex">
-                <AccordionPrimitive.Trigger className="flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-lg font-semibold text-black transition-all outline-none hover:text-[#3B81F5] focus-visible:ring-2 focus-visible:ring-[#3B81F5] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
-                  {item.title}
-                  <PlusIcon
-                    size={20}
-                    className="pointer-events-none shrink-0 text-[#626262] transition-transform duration-200"
-                    aria-hidden="true"
-                  />
-                </AccordionPrimitive.Trigger>
-              </AccordionPrimitive.Header>
+              <AccordionTrigger className="text-left text-lg font-semibold text-black hover:text-[#3B81F5] focus-visible:ring-2 focus-visible:ring-[#3B81F5] focus-visible:ring-offset-2 [&>svg]:text-[#626262] [&>svg]:w-5 [&>svg]:h-5">
+                {item.title}
+              </AccordionTrigger>
               <AccordionContent className="text-[#626262] pb-4 pt-2 text-base leading-relaxed">
                 {item.content}
               </AccordionContent>
