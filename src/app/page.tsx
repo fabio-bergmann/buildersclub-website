@@ -672,8 +672,8 @@ export default function Home() {
         {/* FAQ Accordion */}
         <Accordion type="single" collapsible className="w-full" defaultValue="1">
           {faqItems.map((item) => (
-            <AccordionItem value={item.id} key={item.id} className="py-4 border-b border-gray-300 last:border-b-0">
-              <AccordionTrigger className="text-left text-lg font-semibold text-black hover:text-[#3B81F5] focus-visible:ring-2 focus-visible:ring-[#3B81F5] focus-visible:ring-offset-2 [&>svg]:text-[#626262] [&>svg]:w-5 [&>svg]:h-5">
+            <AccordionItem value={item.id} key={item.id} className="border-b border-gray-300 last:border-b-0">
+              <AccordionTrigger className="py-4 text-left text-lg font-semibold text-black hover:text-[#3B81F5] hover:no-underline focus-visible:ring-2 focus-visible:ring-[#3B81F5] focus-visible:ring-offset-2 [&>svg]:text-[#626262] [&>svg]:w-5 [&>svg]:h-5">
                 {item.title}
               </AccordionTrigger>
               <AccordionContent className="text-[#626262] pb-4 pt-2 text-base leading-relaxed">
