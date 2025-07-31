@@ -1,7 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { PlusIcon } from "lucide-react";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { MainButton } from './components/MainButton';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+} from "@/components/ui/accordion";
 
 export default function Home() {
   const [post1Liked, setPost1Liked] = useState(false);
@@ -10,6 +17,45 @@ export default function Home() {
   const [postText, setPostText] = useState('');
   const [postTitle, setPostTitle] = useState('');
   const [isWriteExpanded, setIsWriteExpanded] = useState(false);
+
+  const faqItems = [
+    {
+      id: "1",
+      title: "What makes AI Builders Club different from other courses?",
+      content:
+        "AI Builders Club focuses on practical, hands-on learning with real-world projects. You&apos;ll build actual AI applications from scratch, learn cutting-edge techniques, and join a community of builders who support each other&apos;s growth.",
+    },
+    {
+      id: "2",
+      title: "How long does it take to complete the course?",
+      content:
+        "The course contains 60 lessons totaling 10 hours and 4 minutes of content. Most students complete it in 4-6 weeks studying part-time, but you have lifetime access to learn at your own pace.",
+    },
+    {
+      id: "3",
+      title: "What if I&apos;m a complete beginner to AI development?",
+      content:
+        "Perfect! The course is designed for beginners. We start with fundamentals and gradually build up to advanced concepts. You'll learn everything from basic prompt engineering to building complex AI agents.",
+    },
+    {
+      id: "4",
+      title: "Do I get access to the community forever?",
+      content:
+        "Yes! Your membership includes lifetime access to our exclusive community where you can network with fellow builders, get help with projects, and stay updated on the latest AI developments.",
+    },
+    {
+      id: "5",
+      title: "What kind of projects will I build?",
+      content:
+        "You&apos;ll build real AI applications including customer support bots, content generation tools, AI-powered SaaS applications with payment systems, and much more. Each project teaches practical skills you can use professionally.",
+    },
+    {
+      id: "6",
+      title: "Is there a money-back guarantee?",
+      content:
+        "Yes! We offer a 30-day money-back guarantee. If you&apos;re not completely satisfied with the course content and community, we&apos;ll refund your purchase, no questions asked.",
+    },
+  ];
 
   const handleLike = (postNumber: number) => {
     console.log('Like clicked for post:', postNumber);
@@ -44,6 +90,16 @@ export default function Home() {
       setIsWriteExpanded(false);
     }
   };
+
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing-section');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center px-4 pt-32 pb-20">
       {/* Profile Images */}
@@ -68,7 +124,7 @@ export default function Home() {
 
       {/* CTA Button */}
       <div className="flex justify-center mb-20">
-        <MainButton>
+        <MainButton onClick={scrollToPricing}>
           Join Now
         </MainButton>
       </div>
@@ -111,7 +167,7 @@ export default function Home() {
         <div className="bg-white rounded-2xl shadow-xs overflow-hidden border border-gray-200">
           {/* Course Header */}
           <div className="px-8 py-8 border-b border-gray-200">
-            <h3 className="text-2xl font-bold text-black mb-2">Course Content</h3>
+            <h3 className="text-2xl font-bold text-black mb-2">AI Coding</h3>
             <p className="text-[#626262] text-lg">12 sections • 60 lessons • 10 hr 4 min total</p>
           </div>
           
@@ -262,7 +318,7 @@ export default function Home() {
                     <span className="text-[#626262] text-sm">2d • 💬 General</span>
                   </div>
                   <h3 className="font-bold text-black text-xl mb-2">Just deployed my first AI agent!</h3>
-                  <p className="text-[#626262] mb-3">Finally got my customer support bot working with Claude. It's handling 80% of our tickets automatically now. This course is incredible!</p>
+                  <p className="text-[#626262] mb-3">Finally got my customer support bot working with Claude. It&apos;s handling 80% of our tickets automatically now. This course is incredible!</p>
                   <div className="flex items-center space-x-6 text-[#626262] text-sm">
                     <button 
                       onClick={() => handleLike(1)}
@@ -300,7 +356,7 @@ export default function Home() {
                     <span className="text-[#626262] text-sm">5d • 💬 General</span>
                   </div>
                   <h3 className="font-bold text-black text-xl mb-2">Best practices for prompt engineering? 🤖</h3>
-                  <p className="text-[#626262] mb-3">I'm building an AI app that generates marketing copy. What are your go-to techniques for getting consistent, high-quality outputs from LLMs?</p>
+                  <p className="text-[#626262] mb-3">I&apos;m building an AI app that generates marketing copy. What are your go-to techniques for getting consistent, high-quality outputs from LLMs?</p>
                   <div className="flex items-center space-x-6 text-[#626262] text-sm">
                     <button 
                       onClick={() => handleLike(2)}
@@ -403,6 +459,237 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Perks Section */}
+      <div className="w-full max-w-6xl mt-32">
+        {/* Perks Main Headline */}
+        <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Perks</h2>
+        
+        {/* Perks Subheadline */}
+        <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
+          Exclusive benefits for AI Builders Club members
+        </p>
+        
+        {/* Perks Grid - 3 columns, 2 rows */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Perk 1 */}
+          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-8">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-black mb-3">Perk Title 1</h3>
+            <p className="text-[#626262] leading-relaxed">Placeholder description for the first perk. This will be replaced with actual benefits later.</p>
+          </div>
+
+          {/* Perk 2 */}
+          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-8">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-black mb-3">Perk Title 2</h3>
+            <p className="text-[#626262] leading-relaxed">Placeholder description for the second perk. This will be replaced with actual benefits later.</p>
+          </div>
+
+          {/* Perk 3 */}
+          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-8">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-black mb-3">Perk Title 3</h3>
+            <p className="text-[#626262] leading-relaxed">Placeholder description for the third perk. This will be replaced with actual benefits later.</p>
+          </div>
+
+          {/* Perk 4 */}
+          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-8">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-black mb-3">Perk Title 4</h3>
+            <p className="text-[#626262] leading-relaxed">Placeholder description for the fourth perk. This will be replaced with actual benefits later.</p>
+          </div>
+
+          {/* Perk 5 */}
+          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-8">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-black mb-3">Perk Title 5</h3>
+            <p className="text-[#626262] leading-relaxed">Placeholder description for the fifth perk. This will be replaced with actual benefits later.</p>
+          </div>
+
+          {/* Perk 6 */}
+          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-8">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-black mb-3">Perk Title 6</h3>
+            <p className="text-[#626262] leading-relaxed">Placeholder description for the sixth perk. This will be replaced with actual benefits later.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Pricing Section */}
+      <div id="pricing-section" className="w-full max-w-5xl mt-32">
+        {/* Pricing Main Headline */}
+        <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Pricing</h2>
+        
+        {/* Pricing Subheadline */}
+        <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
+          Choose the plan that fits your AI building journey
+        </p>
+        
+        {/* Pricing Plans Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {/* Basic Plan */}
+          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-8 relative">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-black mb-2">Basic</h3>
+              <p className="text-[#626262] mb-6">Perfect for getting started with AI development</p>
+              <div className="mb-6">
+                <span className="text-5xl font-bold text-black">$49</span>
+                <span className="text-[#626262] text-xl">/month</span>
+              </div>
+            </div>
+            
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">Access to all course content</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">Community access</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">Basic AI coding tutorials</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">Email support</span>
+              </div>
+            </div>
+            
+            <button className="w-full bg-white border-2 border-gray-300 text-[#626262] font-semibold py-4 px-8 rounded-xl hover:border-gray-400 hover:text-black transition-all duration-200">
+              Get Started
+            </button>
+          </div>
+
+          {/* Pro Plan */}
+          <div className="bg-white rounded-2xl shadow-xs border-2 border-[#3B81F5] p-8 relative">
+            {/* Popular Badge */}
+            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+              <div className="bg-gradient-to-r from-[#3B81F5] to-[#2663EB] text-white px-6 py-2 rounded-full text-sm font-semibold">
+                Most Popular
+              </div>
+            </div>
+            
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-black mb-2">Pro</h3>
+              <p className="text-[#626262] mb-6">Everything you need to become a top 1% AI builder</p>
+              <div className="mb-6">
+                <span className="text-5xl font-bold text-black">$99</span>
+                <span className="text-[#626262] text-xl">/month</span>
+              </div>
+            </div>
+            
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">Everything in Basic</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">Advanced AI agent tutorials</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">1-on-1 mentorship sessions</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">Priority community support</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">Exclusive project templates</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-[#626262]">Live weekly Q&A sessions</span>
+              </div>
+            </div>
+            
+            <button className="w-full bg-gradient-to-r from-[#3B81F5] to-[#2663EB] text-white font-semibold py-4 px-8 rounded-xl hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
+              Start Building Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* FAQ Section */}
+      <div className="w-full max-w-4xl mt-32">
+        {/* FAQ Main Headline */}
+        <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">FAQ</h2>
+        
+        {/* FAQ Subheadline */}
+        <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
+          Frequently asked questions about AI Builders Club
+        </p>
+        
+        {/* FAQ Accordion */}
+        <Accordion type="single" collapsible className="w-full" defaultValue="1">
+          {faqItems.map((item) => (
+            <AccordionItem value={item.id} key={item.id} className="py-4 border-b border-gray-300 last:border-b-0">
+              <AccordionPrimitive.Header className="flex">
+                <AccordionPrimitive.Trigger className="flex flex-1 items-center justify-between gap-4 rounded-md py-2 text-left text-lg font-semibold text-black transition-all outline-none hover:text-[#3B81F5] focus-visible:ring-2 focus-visible:ring-[#3B81F5] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
+                  {item.title}
+                  <PlusIcon
+                    size={20}
+                    className="pointer-events-none shrink-0 text-[#626262] transition-transform duration-200"
+                    aria-hidden="true"
+                  />
+                </AccordionPrimitive.Trigger>
+              </AccordionPrimitive.Header>
+              <AccordionContent className="text-[#626262] pb-4 pt-2 text-base leading-relaxed">
+                {item.content}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
     </div>
   );
