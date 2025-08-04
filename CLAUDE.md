@@ -71,13 +71,6 @@ You are an expert in TypeScript, Node.js, Next.js App Router, React, Supabase, S
 
 ## UI/UX Development
 
-### Color Palette
-- **Background**: `#F5F5F5` (Global background color)
-- **Primary Text**: `#000` (Headlines and primary content)
-- **Secondary Text**: `#626262` (Subheadings and secondary content)
-- **Primary Blue**: `#3B81F5` to `#2663EB` (Gradient for main buttons)
-- **Accent Blue**: `#92C5FD` (Icons and accents)
-
 ### Component Libraries
 - Primary: Shadcn UI + Radix UI for component architecture
 - Styling: Tailwind CSS for layout, spacing, and utilities
