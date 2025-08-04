@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { getLessons, getLessonCount } from '@/data/lessons';
 
 export default function Home() {
   const [post1Liked, setPost1Liked] = useState(false);
@@ -16,6 +17,11 @@ export default function Home() {
   const [postText, setPostText] = useState('');
   const [postTitle, setPostTitle] = useState('');
   const [isWriteExpanded, setIsWriteExpanded] = useState(false);
+  const [expandedLesson, setExpandedLesson] = useState<number | null>(null);
+  const [activeCategory, setActiveCategory] = useState('All');
+  
+  const lessons = getLessons();
+  const totalLessons = getLessonCount();
 
   const faqItems = [
     {
@@ -98,6 +104,14 @@ export default function Home() {
         block: 'start'
       });
     }
+  };
+
+  const handleLessonClick = (index: number) => {
+    setExpandedLesson(expandedLesson === index ? null : index);
+  };
+
+  const handleCategoryClick = (category: string) => {
+    setActiveCategory(category);
   };
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center px-4 pt-32 pb-20">
@@ -259,39 +273,52 @@ export default function Home() {
           {/* Course Header */}
           <div className="px-8 py-8 border-b border-gray-200">
             <h3 className="text-2xl font-bold text-black mb-2">AI Coding</h3>
-            <p className="text-[#626262] text-lg">12 sections • 60 lessons • 10 hr 4 min total</p>
+            <p className="text-[#626262] text-lg">12 sections • {totalLessons} lessons • 10 hr 4 min total</p>
           </div>
           
-          {/* Course Sections */}
-          <div className="divide-y divide-gray-200">
-            {[
-              { title: "Section 1 – Project overview", lessons: "5 lessons" },
-              { title: "Section 2 – Designing UI with v0", lessons: "7 lessons" },
-              { title: "Section 3 – Environment and Cursor setup", lessons: "6 lessons" },
-              { title: "Section 4 – Version control with Git & Github", lessons: "4 lessons" },
-              { title: "Section 5 – Supabase tables, storage and RLS", lessons: "5 lessons" },
-              { title: "Section 6 – Pro level prompting strategies", lessons: "5 lessons" },
-              { title: "Section 7 – Building core app features", lessons: "4 lessons" },
-              { title: "Section 8 – Integrating AI SDK for AI functionality", lessons: "5 lessons" },
-              { title: "Section 9 – Integrating Resend for email", lessons: "4 lessons" },
-              { title: "Section 10 – Integrating Stripe for SaaS payments", lessons: "7 lessons" },
-              { title: "Section 11 – Building the admin dashboard", lessons: "4 lessons" },
-              { title: "Section 12 – Domains and deployments with Vercel", lessons: "4 lessons" }
-            ].map((section, index) => (
-              <div key={index} className="px-8 py-6 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                <div>
-                  <h4 className="text-lg font-semibold text-black mb-1">{section.title}</h4>
+          {/* Course Lessons */}
+          <div>
+            {lessons.map((lesson, index) => (
+              <div key={index} className="border-b border-gray-200 last:border-b-0">
+                <div 
+                  className="px-8 py-6 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
+                  onClick={() => handleLessonClick(index)}
+                >
+                  <div>
+                    <h4 className="text-lg font-semibold text-black mb-1">{lesson.formattedTitle}</h4>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    {lesson.status === "released" ? (
+                      <span className="px-3 py-1 bg-green-50 text-[#2ECC71] text-sm font-medium rounded-md">
+                        Released
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 bg-yellow-50 text-[#F4B400] text-sm font-medium rounded-md">
+                        Coming Soon
+                      </span>
+                    )}
+                    <svg 
+                      className={`w-5 h-5 text-[#626262] transform transition-transform duration-300 ${
+                        expandedLesson === index ? 'rotate-180' : ''
+                      }`}
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <span className="text-[#626262] font-medium">{section.lessons}</span>
-                  <svg 
-                    className="w-5 h-5 text-[#626262] transform transition-transform" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                
+                {/* Expandable Description */}
+                <div 
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    expandedLesson === index ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className="px-8 pb-6">
+                    <p className="text-[#626262] leading-relaxed">{lesson.description}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -364,37 +391,69 @@ export default function Home() {
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex items-center space-x-3">
-              <div className="px-6 py-3 bg-[#626262] text-white rounded-xl text-sm font-medium">All</div>
-              <div className="px-6 py-3 text-[#626262] text-sm font-medium bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex items-center space-x-2">
+            <div className="flex items-center space-x-3 w-full">
+              <button 
+                onClick={() => handleCategoryClick('All')}
+                className={`px-6 py-3 border rounded-xl text-sm font-medium flex-1 text-center transition-colors duration-200 cursor-pointer ${
+                  activeCategory === 'All' 
+                    ? 'bg-[#3B81F5] text-white border-[#3B81F5]' 
+                    : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+                }`}
+              >
+                All
+              </button>
+              <button 
+                onClick={() => handleCategoryClick('General')}
+                className={`px-6 py-3 border rounded-xl text-sm font-medium flex items-center justify-center space-x-2 flex-1 transition-colors duration-200 cursor-pointer ${
+                  activeCategory === 'General' 
+                    ? 'bg-[#3B81F5] text-white border-[#3B81F5]' 
+                    : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+                }`}
+              >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                  <path d="M3 7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V13.5C21 14.8978 21 15.5967 20.7716 16.1481C20.4672 16.8831 19.8831 17.4672 19.1481 17.7716C18.5967 18 17.8978 18 16.5 18C16.0114 18 15.7671 18 15.5405 18.0535C15.2383 18.1248 14.9569 18.2656 14.7185 18.4645C14.5397 18.6137 14.3931 18.8091 14.1 19.2L12.64 21.1467C12.4229 21.4362 12.3143 21.5809 12.1812 21.6327C12.0647 21.678 11.9353 21.678 11.8188 21.6327C11.6857 21.5809 11.5771 21.4362 11.36 21.1467L9.9 19.2C9.60685 18.8091 9.46028 18.6137 9.2815 18.4645C9.04312 18.2656 8.76169 18.1248 8.45951 18.0535C8.23287 18 7.98858 18 7.5 18C6.10218 18 5.40326 18 4.85195 17.7716C4.11687 17.4672 3.53284 16.8831 3.22836 16.1481C3 15.5967 3 14.8978 3 13.5V7.8Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 <span>General</span>
-              </div>
-              <div className="px-6 py-3 text-[#626262] text-sm font-medium bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex items-center space-x-2">
+              </button>
+              <button 
+                onClick={() => handleCategoryClick('Introductions')}
+                className={`px-6 py-3 border rounded-xl text-sm font-medium flex items-center justify-center space-x-2 flex-1 transition-colors duration-200 cursor-pointer ${
+                  activeCategory === 'Introductions' 
+                    ? 'bg-[#3B81F5] text-white border-[#3B81F5]' 
+                    : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+                }`}
+              >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m10 0v10a2 2 0 01-2 2H9a2 2 0 01-2-2V8m0 0V6a2 2 0 012-2h10a2 2 0 012 2v2"/>
+                  <path d="M7.5 4.5C7.5 3.11929 8.61929 2 10 2C11.3807 2 12.5 3.11929 12.5 4.5V6H13.5C14.8978 6 15.5967 6 16.1481 6.22836C16.8831 6.53284 17.4672 7.11687 17.7716 7.85195C18 8.40326 18 9.10218 18 10.5H19.5C20.8807 10.5 22 11.6193 22 13C22 14.3807 20.8807 15.5 19.5 15.5H18V17.2C18 18.8802 18 19.7202 17.673 20.362C17.3854 20.9265 16.9265 21.3854 16.362 21.673C15.7202 22 14.8802 22 13.2 22H12.5V20.25C12.5 19.0074 11.4926 18 10.25 18C9.00736 18 8 19.0074 8 20.25V22H6.8C5.11984 22 4.27976 22 3.63803 21.673C3.07354 21.3854 2.6146 20.9265 2.32698 20.362C2 19.7202 2 18.8802 2 17.2V15.5H3.5C4.88071 15.5 6 14.3807 6 13C6 11.6193 4.88071 10.5 3.5 10.5H2C2 9.10218 2 8.40326 2.22836 7.85195C2.53284 7.11687 3.11687 6.53284 3.85195 6.22836C4.40326 6 5.10218 6 6.5 6H7.5V4.5Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 <span>Introductions</span>
-              </div>
-              <div className="px-6 py-3 text-[#626262] text-sm font-medium bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex items-center space-x-2">
+              </button>
+              <button 
+                onClick={() => handleCategoryClick('Support')}
+                className={`px-6 py-3 border rounded-xl text-sm font-medium flex items-center justify-center space-x-2 flex-1 transition-colors duration-200 cursor-pointer ${
+                  activeCategory === 'Support' 
+                    ? 'bg-[#3B81F5] text-white border-[#3B81F5]' 
+                    : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+                }`}
+              >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+                  <path d="M7 15L10 12L7 9M13 15H17M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 <span>Support</span>
-              </div>
-              <div className="px-6 py-3 text-[#626262] text-sm font-medium bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex items-center space-x-2">
+              </button>
+              <button 
+                onClick={() => handleCategoryClick('Announcements')}
+                className={`px-6 py-3 border rounded-xl text-sm font-medium flex items-center justify-center space-x-2 flex-1 transition-colors duration-200 cursor-pointer ${
+                  activeCategory === 'Announcements' 
+                    ? 'bg-[#3B81F5] text-white border-[#3B81F5]' 
+                    : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+                }`}
+              >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                  <path d="M18.5 16C20.433 16 22 13.0899 22 9.5C22 5.91015 20.433 3 18.5 3M18.5 16C16.567 16 15 13.0899 15 9.5C15 5.91015 16.567 3 18.5 3M18.5 16L5.44354 13.6261C4.51605 13.4575 4.05231 13.3731 3.67733 13.189C2.91447 12.8142 2.34636 12.1335 2.11414 11.3159C2 10.914 2 10.4427 2 9.5C2 8.5573 2 8.08595 2.11414 7.68407C2.34636 6.86649 2.91447 6.18577 3.67733 5.81105C4.05231 5.62685 4.51605 5.54254 5.44354 5.3739L18.5 3M5 14L5.39386 19.514C5.43126 20.0376 5.44996 20.2995 5.56387 20.4979C5.66417 20.6726 5.81489 20.8129 5.99629 20.9005C6.20232 21 6.46481 21 6.98979 21H8.7722C9.37234 21 9.67242 21 9.89451 20.8803C10.0897 20.7751 10.2443 20.6081 10.3342 20.4055C10.4365 20.1749 10.4135 19.8757 10.3675 19.2773L10 14.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 <span>Announcements</span>
-              </div>
-              <div className="ml-auto">
-                <svg className="w-5 h-5 text-[#626262]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </div>
+              </button>
             </div>
 
             {/* Post 1 */}
