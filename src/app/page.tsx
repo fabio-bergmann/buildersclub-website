@@ -289,8 +289,9 @@ export default function Home() {
                   </div>
                   <div className="flex items-center space-x-4">
                     {lesson.status === "released" ? (
-                      <span className="px-3 py-1 bg-green-50 text-[#2ECC71] text-sm font-medium rounded-md">
-                        Released
+                      <span className="px-3 py-1 bg-green-50 text-[#2ECC71] text-sm font-medium rounded-md flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-[#2ECC71] rounded-full"></div>
+                        <span>Released</span>
                       </span>
                     ) : (
                       <span className="px-3 py-1 bg-yellow-50 text-[#F4B400] text-sm font-medium rounded-md">
