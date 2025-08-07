@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { MainButton } from './components/MainButton';
+import { DecorativeLines } from './components/DecorativeLines';
 import {
   Accordion,
   AccordionContent,
@@ -116,122 +117,44 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center px-4 pt-32 pb-20">
       {/* Profile Images with background lines */}
-      <div className="relative flex items-center justify-center mb-16 mt-16 w-full max-w-2xl mx-auto h-14">
-        {/* Top decorative line - positioned at exact top of avatars */}
-        <div className="absolute top-0 left-0 right-0 flex justify-center">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full"></div>
-        </div>
-        
-        {/* Bottom decorative line - positioned at exact bottom of avatars */}
-        <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full"></div>
-        </div>
-        
-        {/* Left vertical line */}
-        <div className="absolute left-1/2 -top-5 -bottom-5 flex justify-start items-center" style={{ transform: 'translateX(-138px)' }}>
-          <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-        </div>
-        
-        {/* Right vertical line */}
-        <div className="absolute right-1/2 -top-5 -bottom-5 flex justify-end items-center" style={{ transform: 'translateX(138px)' }}>
-          <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-        </div>
-        
-        {/* Avatar images */}
-        <div className="flex items-center justify-center space-x-[-12px] relative z-10">
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-3 border-white shadow-lg"></div>
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-3 border-white shadow-lg"></div>
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 border-3 border-white shadow-lg"></div>
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 border-3 border-white shadow-lg"></div>
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-red-400 to-red-600 border-3 border-white shadow-lg"></div>
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-3 border-white shadow-lg"></div>
-        </div>
+      <div className="mb-16 mt-16 w-full max-w-2xl mx-auto flex justify-center">
+        <DecorativeLines edgeAlign={true} verticalExtension={5} elementType="avatars">
+          <div className="flex items-center justify-center space-x-[-12px] h-14">
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-3 border-white shadow-lg"></div>
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-3 border-white shadow-lg"></div>
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 border-3 border-white shadow-lg"></div>
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 border-3 border-white shadow-lg"></div>
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-red-400 to-red-600 border-3 border-white shadow-lg"></div>
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-3 border-white shadow-lg"></div>
+          </div>
+        </DecorativeLines>
       </div>
 
       {/* Main Heading with background lines */}
-      <div className="relative w-full max-w-6xl mx-auto mb-8">
-        {/* Top decorative line - positioned at exact top of heading */}
-        <div className="absolute top-0 left-0 right-0 flex justify-center">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full"></div>
-        </div>
-        
-        {/* Bottom decorative line - positioned at exact bottom of heading */}
-        <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full"></div>
-        </div>
-        
-        {/* Left vertical line */}
-        <div className="absolute left-1/2 -top-5 -bottom-5 flex justify-start items-center" style={{ transform: 'translateX(-451px)' }}>
-          <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-        </div>
-        
-        {/* Right vertical line */}
-        <div className="absolute right-1/2 -top-5 -bottom-5 flex justify-end items-center" style={{ transform: 'translateX(451px)' }}>
-          <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-        </div>
-        
-        {/* Headline text */}
-        <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-black text-center leading-[1.1] tracking-tight relative z-10">
-          Become Top 1% AI Builder
-        </h1>
+      <div className="w-full max-w-6xl mx-auto mb-8">
+        <DecorativeLines edgeAlign={true} verticalExtension={5} elementType="text" textLetterWidthRatio={0.85}>
+          <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-black text-center leading-[1.1] tracking-tight">
+            Become Top 1% AI Builder
+          </h1>
+        </DecorativeLines>
       </div>
 
       {/* Subheading with background lines */}
-      <div className="relative w-full max-w-3xl mx-auto mb-14">
-        {/* Top decorative line - positioned at exact top of subheading */}
-        <div className="absolute top-0 left-0 right-0 flex justify-center">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full"></div>
-        </div>
-        
-        {/* Bottom decorative line - positioned at exact bottom of subheading */}
-        <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full"></div>
-        </div>
-        
-        {/* Left vertical line */}
-        <div className="absolute left-1/2 -top-5 -bottom-5 flex justify-start items-center" style={{ transform: 'translateX(-280px)' }}>
-          <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-        </div>
-        
-        {/* Right vertical line */}
-        <div className="absolute right-1/2 -top-5 -bottom-5 flex justify-end items-center" style={{ transform: 'translateX(280px)' }}>
-          <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-        </div>
-        
-        {/* Subheading text */}
-        <p className="text-xl md:text-2xl text-[#626262] text-center leading-relaxed font-medium relative z-10">
-          Learn AI coding, Agents, LLM applications
-        </p>
+      <div className="w-full max-w-3xl mx-auto mb-14">
+        <DecorativeLines edgeAlign={true} verticalExtension={5} elementType="text" textLetterWidthRatio={0.7}>
+          <p className="text-xl md:text-2xl text-[#626262] text-center leading-relaxed font-medium">
+            Learn AI coding, Agents, LLM applications
+          </p>
+        </DecorativeLines>
       </div>
 
       {/* CTA Button with background lines */}
-      <div className="relative w-full max-w-lg mx-auto mb-20 flex justify-center">
-        {/* Top decorative line - positioned to align with button top on hover */}
-        <div className="absolute top-1 left-0 right-0 flex justify-center">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full"></div>
-        </div>
-        
-        {/* Bottom decorative line - positioned to align with button bottom on hover */}
-        <div className="absolute -bottom-1 left-0 right-0 flex justify-center">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full"></div>
-        </div>
-        
-        {/* Left vertical line */}
-        <div className="absolute left-1/2 -top-5 -bottom-7 flex justify-start items-center" style={{ transform: 'translateX(-89px)' }}>
-          <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-        </div>
-        
-        {/* Right vertical line */}
-        <div className="absolute right-1/2 -top-5 -bottom-7 flex justify-end items-center" style={{ transform: 'translateX(89px)' }}>
-          <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-        </div>
-        
-        {/* Button */}
-        <div className="relative z-10">
+      <div className="w-full max-w-lg mx-auto mb-20 flex justify-center">
+        <DecorativeLines edgeAlign={true} verticalExtension={7} elementType="button">
           <MainButton onClick={scrollToPricing}>
             Join Now
           </MainButton>
-        </div>
+        </DecorativeLines>
       </div>
 
       {/* Terminal Mockup */}
@@ -619,7 +542,7 @@ export default function Home() {
         
         {/* Perks Subheadline */}
         <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-          Exclusive benefits for AI Builders Club members
+          Exclusive benefits for Builder&apos;s Club members
         </p>
         
         {/* Perks Grid - 3 columns, 2 rows */}
