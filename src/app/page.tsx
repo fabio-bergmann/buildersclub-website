@@ -196,7 +196,7 @@ export default function Home() {
           {/* Course Header */}
           <div className="px-8 py-8 border-b border-gray-200">
             <h3 className="text-2xl font-bold text-black mb-2">AI Coding</h3>
-            <p className="text-[#626262] text-lg">12 sections • {totalLessons} lessons • 10 hr 4 min total</p>
+            <p className="text-[#626262] text-lg">{totalLessons} lessons</p>
           </div>
           
           {/* Course Lessons */}
