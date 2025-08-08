@@ -148,7 +148,14 @@ export function DecorativeLines({
   }, [leftPos, rightPos, baseOffset, finalLineOffset, dimensions.width, containerWidth, containerLeft]);
 
   const lineThickness = 2;
-  const extensionPx = 40; // Fixed 40px extension in all directions
+  // Element-specific extension values
+  const getExtensionPx = () => {
+    if (elementType === 'text') {
+      return 20; // 20px extension for text/subheading elements
+    }
+    return 30; // 30px extension for other elements
+  };
+  const extensionPx = getExtensionPx();
 
   // Calculate cross-pattern line dimensions
   const calculateCrossLines = () => {
@@ -156,9 +163,18 @@ export function DecorativeLines({
       return { horizontalLines: null, verticalLines: null };
     }
 
-    // Vertical lines: extend 40px above and below element
-    const verticalHeight = dimensions.height + (extensionPx * 2);
-    const verticalTop = -extensionPx;
+    // Vertical lines: extend above and below element
+    let verticalExtensionTop = extensionPx;
+    let verticalExtensionBottom = extensionPx;
+    
+    // Avatar-specific adjustments for vertical lines
+    if (elementType === 'avatars') {
+      verticalExtensionTop += 2; // Move top 2px more up
+      verticalExtensionBottom += 2; // Extend bottom as well
+    }
+    
+    const verticalHeight = dimensions.height + verticalExtensionTop + verticalExtensionBottom;
+    const verticalTop = -verticalExtensionTop;
     
     // Calculate positions based on element type
     let horizontalWidth, horizontalLeft, leftVerticalPos, rightVerticalPos;
@@ -198,14 +214,34 @@ export function DecorativeLines({
       horizontalLeft = (containerWidth - horizontalWidth) / 2;
       leftVerticalPos = leftPos;
       rightVerticalPos = rightPos;
+      
+      // Element-specific positioning adjustments
+      if (elementType === 'avatars') {
+        leftVerticalPos += 1;  // Move left line 1px more to the right (3-2=1)
+        rightVerticalPos -= 3; // Move right line 3px more to the left (5-2=3)
+      } else if (elementType === 'button') {
+        leftVerticalPos += 2;  // Move left line 2px more to the right
+        rightVerticalPos -= 4; // Move right line 4px more to the left
+      }
+    }
+
+    // Element-specific horizontal line adjustments
+    let topLineY = 0;
+    let bottomLineY = dimensions.height;
+    
+    if (elementType === 'button') {
+      bottomLineY += 6; // Move bottom line 6px down for buttons
+    } else if (elementType === 'avatars') {
+      topLineY -= 2; // Move top line 2px more up for avatars
+      bottomLineY += 3; // Move bottom line 3px down for avatars (6-3=3)
     }
 
     return {
       horizontalLines: {
         left: horizontalLeft,
         width: horizontalWidth,
-        topY: 0, // Top of element
-        bottomY: dimensions.height, // Bottom of element
+        topY: topLineY,
+        bottomY: bottomLineY,
       },
       verticalLines: {
         height: verticalHeight,
@@ -220,10 +256,10 @@ export function DecorativeLines({
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
-      {/* Top horizontal line - extends 40px left and right of element */}
+      {/* Top horizontal line - extends 30px left and right of element */}
       {crossLines.horizontalLines && (
         <div 
-          className="absolute z-30"
+          className="absolute z-0"
           style={{
             left: `${crossLines.horizontalLines.left}px`,
             top: `${crossLines.horizontalLines.topY}px`,
@@ -234,10 +270,10 @@ export function DecorativeLines({
         />
       )}
       
-      {/* Bottom horizontal line - extends 40px left and right of element */}
+      {/* Bottom horizontal line - extends 30px left and right of element */}
       {crossLines.horizontalLines && (
         <div 
-          className="absolute z-30"
+          className="absolute z-0"
           style={{
             left: `${crossLines.horizontalLines.left}px`,
             top: `${crossLines.horizontalLines.bottomY}px`,
@@ -248,10 +284,10 @@ export function DecorativeLines({
         />
       )}
       
-      {/* Left vertical line - extends 40px above and below element */}
+      {/* Left vertical line - extends 30px above and below element */}
       {crossLines.verticalLines && (
         <div 
-          className="absolute z-30"
+          className="absolute z-0"
           style={{
             left: `${crossLines.verticalLines.leftPos}px`,
             top: `${crossLines.verticalLines.top}px`,
@@ -262,10 +298,10 @@ export function DecorativeLines({
         />
       )}
       
-      {/* Right vertical line - extends 40px above and below element */}
+      {/* Right vertical line - extends 30px above and below element */}
       {crossLines.verticalLines && (
         <div 
-          className="absolute z-30"
+          className="absolute z-0"
           style={{
             left: `${crossLines.verticalLines.rightPos}px`,
             top: `${crossLines.verticalLines.top}px`,
