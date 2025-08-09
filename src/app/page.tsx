@@ -392,7 +392,9 @@ export default function Home() {
                     <div className="mb-2">
                       {lesson.status === "released" ? (
                         <span className="px-3 py-1 bg-green-50 text-[#2ECC71] text-sm font-medium rounded-md flex items-center space-x-2 w-fit">
-                          <div className="w-2 h-2 bg-[#2ECC71] rounded-full"></div>
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
                           <span>Released</span>
                         </span>
                       ) : (
@@ -403,7 +405,10 @@ export default function Home() {
                     </div>
                     {/* Title and arrow */}
                     <div className="flex items-center justify-between">
-                      <h4 className="text-lg font-semibold text-black">{lesson.formattedTitle}</h4>
+                      <h4 className="text-lg font-semibold">
+                        <span className="text-[#626262]">Lesson {lesson.number} –</span>{' '}
+                        <span className="text-black">{lesson.title}</span>
+                      </h4>
                       <svg 
                         className={`w-5 h-5 text-[#626262] transform transition-transform duration-300 ${
                           expandedLesson === index ? 'rotate-180' : ''
@@ -420,12 +425,17 @@ export default function Home() {
                   {/* Desktop Layout */}
                   <div className="hidden md:flex items-center justify-between">
                     <div>
-                      <h4 className="text-lg font-semibold text-black mb-1">{lesson.formattedTitle}</h4>
+                      <h4 className="text-lg font-semibold mb-1">
+                        <span className="text-[#626262]">Lesson {lesson.number} –</span>{' '}
+                        <span className="text-black">{lesson.title}</span>
+                      </h4>
                     </div>
                     <div className="flex items-center space-x-4">
                       {lesson.status === "released" ? (
                         <span className="px-3 py-1 bg-green-50 text-[#2ECC71] text-sm font-medium rounded-md flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-[#2ECC71] rounded-full"></div>
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
                           <span>Released</span>
                         </span>
                       ) : (
@@ -912,37 +922,37 @@ export default function Home() {
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-[#626262]">Exclusive Builder&apos;s Club community access</span>
+                <span className="text-black">Exclusive Builder&apos;s Club community access</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-[#626262]">Complete AI Coding course access</span>
+                <span className="text-black">Complete AI Coding course access</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-[#626262]">All future courses included</span>
+                <span className="text-black">All future courses included</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-[#626262]">AI coding templates & launch kits</span>
+                <span className="text-black">AI coding templates & launch kits</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-[#626262]">Full tech support</span>
+                <span className="text-black">Full tech support</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-[#626262]">1:1 strategy session with Fabio (20 min)</span>
+                <span className="text-black">1:1 strategy session with Fabio (20 min)</span>
               </div>
             </div>
             
@@ -991,37 +1001,37 @@ export default function Home() {
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-300">Exclusive Builder&apos;s Club community access</span>
+                <span className="text-white">Exclusive Builder&apos;s Club community access</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-300">Complete AI Coding course access</span>
+                <span className="text-white">Complete AI Coding course access</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-300">All future courses included</span>
+                <span className="text-white">All future courses included</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-300">AI coding templates & launch kits</span>
+                <span className="text-white">AI coding templates & launch kits</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-300">Priority tech support</span>
+                <span className="text-white">Priority tech support</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-300">Quarterly 1:1 strategy session with Fabio (45 min each)</span>
+                <span className="text-white">Quarterly 1:1 strategy session with Fabio (45 min each)</span>
               </div>
             </div>
             
