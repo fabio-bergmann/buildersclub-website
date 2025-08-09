@@ -1041,7 +1041,7 @@ export default function Home() {
         
         {/* FAQ Subheadline */}
         <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-          Frequently asked questions about AI Builders Club
+          Frequently asked questions about Builder's Club
         </p>
         
         {/* FAQ Accordion */}
