@@ -62,7 +62,7 @@ interface PostAuthorProps {
   user: User;
   timeAgo: string;
   category: string;
-  categoryIcon: string;
+  categoryIcon: React.ReactNode;
   className?: string;
 }
 
@@ -79,7 +79,11 @@ export function PostAuthor({
       <div className="flex-1">
         <div className="flex items-center space-x-2 mb-1">
           <span className="font-semibold text-black">{user.name}</span>
-          <span className="text-[#626262] text-sm">{timeAgo} • {categoryIcon} {category}</span>
+        </div>
+        <div className="text-[#626262] text-sm flex items-center space-x-1 mb-2">
+          <span>{timeAgo} •</span>
+          <span className="inline-flex">{categoryIcon}</span>
+          <span>{category}</span>
         </div>
       </div>
     </div>

@@ -153,38 +153,38 @@ export const posts: PostData[] = [
     userId: 'piotr',
     title: 'Just deployed my first AI agent!',
     content: "Finally got my customer support bot working with Claude. It's handling 80% of our tickets automatically now. This course is incredible!",
-    timeAgo: '2d',
+    timeAgo: '2h ago',
     category: 'General',
     categoryIcon: '💬',
     likes: 2,
-    comments: 4,
-    lastCommentTime: '1d ago',
-    commenters: ['jennifer'], // Jennifer made the last comment
+    comments: 2,
+    lastCommentTime: '10m ago',
+    commenters: ['yasmine', 'brett'], // Random commenters
   },
   {
     id: 'post2', 
     userId: 'dmytro',
     title: 'Best practices for prompt engineering? 🤖',
     content: "I'm building an AI app that generates marketing copy. What are your go-to techniques for getting consistent, high-quality outputs from LLMs?",
-    timeAgo: '5d',
+    timeAgo: '5h ago',
     category: 'General',
     categoryIcon: '💬',
     likes: 8,
-    comments: 12,
-    lastCommentTime: '3d ago',
-    commenters: ['piotr', 'manuel', 'brett', 'yasmine'], // Multiple commenters
+    comments: 2,
+    lastCommentTime: '2h ago',
+    commenters: ['brian', 'dmytro'], // Random commenters
   },
   {
     id: 'post3',
     userId: 'manuel', 
     title: 'New here - excited to learn! 👋',
     content: "Just joined the community after struggling with my first AI project. Looking forward to learning from everyone and building something amazing together!",
-    timeAgo: '1w',
+    timeAgo: '1d ago',
     category: 'Introductions',
     categoryIcon: '👋',
     likes: 5,
-    comments: 3,
-    lastCommentTime: '5d ago',
-    commenters: ['piotr'], // Piotr made the last comment
+    comments: 2,
+    lastCommentTime: '30m ago',
+    commenters: ['brett', 'yasmine'], // Random commenters
   },
 ];
