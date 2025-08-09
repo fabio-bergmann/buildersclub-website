@@ -313,16 +313,16 @@ export default function Home() {
       <div className="w-full max-w-6xl mx-auto mb-8">
         <DecorativeLines edgeAlign={true} verticalExtension={5} elementType="text" textLetterWidthRatio={0.85}>
           <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-black text-center leading-[1.1] tracking-tight">
-            Become Top 1% AI Builder
+            From Idea to App with AI
           </h1>
         </DecorativeLines>
       </div>
 
-      {/* Subheading with background lines */}
+      {/* Subheading with brackground lines */}
       <div className="w-full max-w-3xl mx-auto mb-14">
         <DecorativeLines edgeAlign={true} verticalExtension={5} elementType="text" textLetterWidthRatio={0.7}>
           <p className="text-xl md:text-2xl text-[#626262] text-center leading-relaxed font-medium">
-            Learn AI coding, Agents, LLM applications
+            Learn, build, and grow in a community of Builder’s
           </p>
         </DecorativeLines>
       </div>
@@ -1068,6 +1068,9 @@ export default function Home() {
           ))}
         </Accordion>
       </div>
+
+      {/* Spacer below FAQ section */}
+      <div className="h-[200px]"></div>
     </div>
   );
 }
