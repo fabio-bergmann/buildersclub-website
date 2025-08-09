@@ -13,7 +13,7 @@ export function MainButton({ children, onClick, className = '', disabled = false
       onClick={onClick}
       disabled={disabled}
       className={`
-        bg-gradient-to-b from-[#3B81F5] to-[#2663EB] hover:from-[#2563EB] hover:to-[#1D4ED8] active:from-[#1D4ED8] active:to-[#1E40AF]
+        bg-gradient-to-b from-[#3478F2] to-[#2663EB] hover:from-[#2563EB] hover:to-[#1D4ED8] active:from-[#1D4ED8] active:to-[#1E40AF]
         text-white font-semibold 
         px-8 py-4 
         rounded-2xl

@@ -97,9 +97,14 @@ export default function Home() {
   const scrollToPricing = () => {
     const pricingSection = document.getElementById('pricing-section');
     if (pricingSection) {
-      pricingSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      const elementRect = pricingSection.getBoundingClientRect();
+      const elementTop = elementRect.top + window.scrollY;
+      const offset = 50; // 50px margin above
+      const targetPosition = elementTop - offset;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
       });
     }
   };

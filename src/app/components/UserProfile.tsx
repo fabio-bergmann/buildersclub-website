@@ -28,7 +28,7 @@ export function UserProfile({
       <div className={`${isHorizontal ? 'flex-1' : 'text-center'}`}>
         <div className="font-medium text-black text-sm">{user.name}</div>
         {showPoints && user.points && (
-          <div className="text-[#3B81F5] font-semibold text-sm">{user.points}</div>
+          <div className="text-[#3478F2] font-semibold text-sm">{user.points}</div>
         )}
       </div>
       {showRank && user.rank && (
@@ -52,7 +52,7 @@ export function LeaderboardEntry({ user, className = '' }: LeaderboardEntryProps
       <div className="flex-1">
         <div className="font-medium text-black text-sm">{user.name}</div>
       </div>
-      <div className="text-[#3B81F5] font-semibold text-sm">{user.points}</div>
+      <div className="text-[#3478F2] font-semibold text-sm">{user.points}</div>
     </div>
   );
 }
