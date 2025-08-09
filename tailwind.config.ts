@@ -14,6 +14,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-figtree)", "sans-serif"],
+        caveat: ["var(--font-caveat)", "cursive"],
       },
       keyframes: {
         "accordion-down": {

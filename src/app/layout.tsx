@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+import { Figtree, Caveat } from "next/font/google";
 import "./globals.css";
 import { Footer } from "./components/Footer";
 
@@ -7,6 +7,13 @@ const figtree = Figtree({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-figtree",
+  display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-caveat",
   display: "swap",
 });
 
@@ -23,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${figtree.variable} font-sans antialiased`}
+        className={`${figtree.variable} ${caveat.variable} font-sans antialiased`}
       >
         {children}
         <Footer />
