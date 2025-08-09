@@ -817,7 +817,7 @@ export default function Home() {
                 <path d="M16 3.46776C17.4817 4.20411 18.5 5.73314 18.5 7.5C18.5 9.26686 17.4817 10.7959 16 11.5322M18 16.7664C19.5115 17.4503 20.8725 18.565 22 20M2 20C3.94649 17.5226 6.58918 16 9.5 16C12.4108 16 15.0535 17.5226 17 20M14 7.5C14 9.98528 11.9853 12 9.5 12C7.01472 12 5 9.98528 5 7.5C5 5.01472 7.01472 3 9.5 3C11.9853 3 14 5.01472 14 7.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-black mb-3">Exclusive Builder's Community</h3>
+            <h3 className="text-lg font-bold text-black mb-3">Exclusive Builder&apos;s Community</h3>
             <p className="text-[#626262] leading-relaxed">Join an invite-only network of serious founders. Get accountability partners, build in public, and connect with fellow builders.</p>
           </div>
 
@@ -838,7 +838,7 @@ export default function Home() {
       {/* New Pricing Section - Designjoy Style */}
       <div id="pricing-section" className="w-full max-w-6xl mt-32">
         {/* New Pricing Main Headline */}
-        <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Join Builder's Club</h2>
+        <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Join Builder&apos;s Club</h2>
         
         {/* New Pricing Subheadline */}
         <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
@@ -879,7 +879,7 @@ export default function Home() {
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-[#626262]">Exclusive Builder's Club community access</span>
+                <span className="text-[#626262]">Exclusive Builder&apos;s Club community access</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -958,7 +958,7 @@ export default function Home() {
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-300">Exclusive Builder's Club community access</span>
+                <span className="text-gray-300">Exclusive Builder&apos;s Club community access</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
