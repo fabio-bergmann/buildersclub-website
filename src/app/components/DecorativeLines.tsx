@@ -22,15 +22,15 @@ export function DecorativeLines({
   children,
   spacing = 20,
   className = '',
-  verticalExtension = 5,
+  // verticalExtension = 5, // Unused parameter
   edgeAlign = false,
   lineOffset = 0,
   leftOffset,
   rightOffset,
   elementType = 'default',
-  textLetterInset = 2, // Default 2px inset for letter boundaries
+  // textLetterInset = 2, // Unused parameter - Default 2px inset for letter boundaries
   textLetterWidthRatio = 0.7, // Default: letters are 70% of container width (tighter)
-  responsiveTextBoundaries = true, // Default: enable responsive detection
+  // responsiveTextBoundaries = true, // Unused parameter - Default: enable responsive detection
 }: DecorativeLinesProps) {
   const { ref, dimensions } = useElementDimensions();
   const containerRef = React.useRef<HTMLDivElement>(null);

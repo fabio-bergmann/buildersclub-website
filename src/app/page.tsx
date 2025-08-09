@@ -23,8 +23,7 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [postCategory, setPostCategory] = useState('General');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [userPosts, setUserPosts] = useState<any[]>([]);
-  const [currentTime, setCurrentTime] = useState(Date.now());
+  const [userPosts, setUserPosts] = useState<typeof posts>([]);
   const [postEngagement, setPostEngagement] = useState<Record<string, { likes: number; hasComment: boolean; commentTimestamp?: number }>>({});
   const [userPoints, setUserPoints] = useState(0);
   const [userRank, setUserRank] = useState<number | null>(null);
@@ -86,15 +85,6 @@ export default function Home() {
     setIsWriteExpanded(true);
   };
 
-  const handleWriteBlur = (e: React.FocusEvent) => {
-    // Only collapse if focus is moving outside the write container
-    const writeContainer = e.currentTarget.closest('[data-write-container]');
-    if (writeContainer && !writeContainer.contains(e.relatedTarget as Node)) {
-      if (!postTitle && !postText) {
-        setIsWriteExpanded(false);
-      }
-    }
-  };
 
   const handleTextareaResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPostText(e.target.value);
@@ -188,10 +178,6 @@ export default function Home() {
     return `${diffInDays}d ago`;
   };
 
-  const handleCategorySelect = (category: string) => {
-    setPostCategory(category);
-    setIsDropdownOpen(false);
-  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -208,26 +194,20 @@ export default function Home() {
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isDropdownOpen]);
 
-  // Update time every minute for dynamic timestamps
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(Date.now());
-    }, 60000); // Update every minute
-
-    return () => clearInterval(interval);
-  }, []);
 
   const handlePost = () => {
     if (!postTitle.trim() || !postText.trim()) return;
     
     const newPostId = `user-post-${Date.now()}`;
-    const newPost = {
+    const newPost: typeof posts[0] & { timestamp?: number } = {
       id: newPostId,
       userId: 'you',
       title: postTitle,
       content: postText,
+      timeAgo: 'Just now',
       timestamp: Date.now(),
       category: postCategory,
+      categoryIcon: '',
       likes: 0,
       comments: 0,
       lastCommentTime: '',
@@ -672,7 +652,10 @@ export default function Home() {
                 <div key={post.id} className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
                   <PostAuthor 
                     user={user}
-                    timeAgo={post.timestamp ? formatTimeAgo(post.timestamp) : post.timeAgo}
+                    timeAgo={(() => {
+                      const postWithTimestamp = post as typeof post & { timestamp?: number };
+                      return postWithTimestamp.timestamp ? formatTimeAgo(postWithTimestamp.timestamp) : post.timeAgo;
+                    })()}
                     category={post.category}
                     categoryIcon={getCategoryIcon(post.category)}
                   />
@@ -698,7 +681,7 @@ export default function Home() {
                       {post.commenters && post.commenters.length > 0 && post.comments > 0 && (
                         <div className="flex items-center space-x-2">
                           <div className={`flex ${post.commenters.length > 1 ? '-space-x-1' : ''}`}>
-                            {post.commenters.slice(0, 4).map((commenterId, index) => {
+                            {post.commenters.slice(0, 4).map((commenterId) => {
                               const commenter = getUserById(commenterId);
                               console.log(`Post ${post.id} - Looking for commenter: ${commenterId}, found:`, commenter);
                               return commenter ? (
@@ -748,12 +731,12 @@ export default function Home() {
                       }} 
                     />
                   )}
-                  {topUsers.filter(user => user.id !== 'you').slice(0, userRank && userPoints > 0 ? 9 : 10).map((user, index) => (
+                  {topUsers.filter(user => user.id !== 'you').slice(0, userRank && userPoints > 0 ? 9 : 10).map((user) => (
                     <LeaderboardEntry 
                       key={user.id} 
                       user={{
                         ...user,
-                        rank: userRank && userPoints > 0 ? user.rank + 1 : user.rank
+                        rank: userRank && userPoints > 0 ? (user.rank || 0) + 1 : user.rank
                       }} 
                     />
                   ))}

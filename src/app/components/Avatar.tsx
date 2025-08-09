@@ -52,7 +52,7 @@ export function Avatar({
         ${className}
       `}
     >
-      {showImage ? (
+      {showImage && user.avatarImage ? (
         <Image
           src={user.avatarImage}
           alt={`${user.name} avatar`}
@@ -103,7 +103,7 @@ export function AvatarGroup({
   
   return (
     <div className={`flex items-center justify-center ${overlapClass} ${className}`}>
-      {displayUsers.map((user, index) => (
+      {displayUsers.map((user) => (
         <Avatar
           key={user.id}
           user={user}
