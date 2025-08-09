@@ -10,11 +10,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { getLessons, getLessonCount } from '@/data/lessons';
+import { getCommunityAvatars, getUserById, posts, getTopUsers } from '@/data/users';
+import { AvatarGroup, Avatar } from './components/Avatar';
+import { PostAuthor, LeaderboardEntry } from './components/UserProfile';
 
 export default function Home() {
-  const [post1Liked, setPost1Liked] = useState(false);
-  const [post2Liked, setPost2Liked] = useState(false);
-  const [post3Liked, setPost3Liked] = useState(false);
+  const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
   const [postText, setPostText] = useState('');
   const [postTitle, setPostTitle] = useState('');
   const [isWriteExpanded, setIsWriteExpanded] = useState(false);
@@ -23,6 +24,9 @@ export default function Home() {
   
   const lessons = getLessons();
   const totalLessons = getLessonCount();
+  const communityAvatars = getCommunityAvatars();
+  const youUser = getUserById('you')!;
+  const topUsers = getTopUsers(10);
 
   const faqItems = [
     {
@@ -63,28 +67,12 @@ export default function Home() {
     },
   ];
 
-  const handleLike = (postNumber: number) => {
-    console.log('Like clicked for post:', postNumber);
-    switch(postNumber) {
-      case 1:
-        setPost1Liked(prev => {
-          console.log('Post 1 liked state changing from', prev, 'to', !prev);
-          return !prev;
-        });
-        break;
-      case 2:
-        setPost2Liked(prev => {
-          console.log('Post 2 liked state changing from', prev, 'to', !prev);
-          return !prev;
-        });
-        break;
-      case 3:
-        setPost3Liked(prev => {
-          console.log('Post 3 liked state changing from', prev, 'to', !prev);
-          return !prev;
-        });
-        break;
-    }
+  const handleLike = (postId: string) => {
+    console.log('Like clicked for post:', postId);
+    setLikedPosts(prev => ({
+      ...prev,
+      [postId]: !prev[postId]
+    }));
   };
 
   const handleWriteClick = () => {
@@ -117,15 +105,11 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center px-4 pt-32 pb-20">
       {/* Profile Images with background lines */}
-      <div className="mb-16 mt-16 w-full max-w-2xl mx-auto flex justify-center">
-        <DecorativeLines edgeAlign={true} verticalExtension={5} elementType="avatars">
-          <div className="flex items-center justify-center space-x-[-12px] h-14">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-3 border-white shadow-lg"></div>
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-3 border-white shadow-lg"></div>
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 border-3 border-white shadow-lg"></div>
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 border-3 border-white shadow-lg"></div>
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-red-400 to-red-600 border-3 border-white shadow-lg"></div>
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-3 border-white shadow-lg"></div>
+      <div className="mb-12 mt-12 w-full max-w-xl mx-auto flex justify-center">
+        <DecorativeLines edgeAlign={true} verticalExtension={3} elementType="avatars">
+          <div className="h-12 flex items-center space-x-3">
+            <AvatarGroup users={communityAvatars} size="lg" overlap={true} />
+            <span className="text-lg font-semibold text-[#626262]">+12</span>
           </div>
         </DecorativeLines>
       </div>
@@ -272,9 +256,7 @@ export default function Home() {
                   onClick={handleWriteClick}
                   className="flex items-center space-x-4 cursor-pointer hover:bg-gray-50 rounded-xl p-2 transition-colors duration-200"
                 >
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-sm font-bold">
-                    YOU
-                  </div>
+                  <Avatar user={youUser} size="lg" />
                   <div className="flex-1 text-[#999999] text-lg">
                     Write something
                   </div>
@@ -284,9 +266,7 @@ export default function Home() {
                 <div className="space-y-3">
                   {/* Title Input */}
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-sm font-bold">
-                      YOU
-                    </div>
+                    <Avatar user={youUser} size="lg" />
                     <input
                       type="text"
                       value={postTitle}
@@ -380,124 +360,70 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Post 1 */}
-            <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
-              <div className="flex items-start space-x-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-sm font-bold">
-                  M
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <span className="font-semibold text-black">Michael</span>
-                    <span className="text-[#626262] text-sm">2d • 💬 General</span>
-                  </div>
-                  <h3 className="font-bold text-black text-xl mb-2">Just deployed my first AI agent!</h3>
-                  <p className="text-[#626262] mb-3">Finally got my customer support bot working with Claude. It&apos;s handling 80% of our tickets automatically now. This course is incredible!</p>
-                  <div className="flex items-center space-x-6 text-[#626262] text-sm">
-                    <button 
-                      onClick={() => handleLike(1)}
-                      className={`flex items-center space-x-1 hover:opacity-70 transition-all duration-200 cursor-pointer ${post1Liked ? 'text-[#3B81F5]' : 'text-[#626262]'}`}
-                    >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill={post1Liked ? 'currentColor' : 'none'} xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 22V11M2 13V20C2 21.1046 2.89543 22 4 22H17.4262C18.907 22 20.1662 20.9197 20.3914 19.4562L21.4683 12.4562C21.7479 10.6389 20.3418 9 18.5032 9H15C14.4477 9 14 8.55228 14 8V4.46584C14 3.10399 12.896 2 11.5342 2C11.2093 2 10.915 2.1913 10.7831 2.48812L7.26394 10.4061C7.10344 10.7673 6.74532 11 6.35013 11H4C2.89543 11 2 11.8954 2 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <span className="min-w-[8px] text-center">{post1Liked ? 3 : 2}</span>
-                    </button>
-                    <span className="flex items-center space-x-1">
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V13.2C21 14.8802 21 15.7202 20.673 16.362C20.3854 16.9265 19.9265 17.3854 19.362 17.673C18.7202 18 17.8802 18 16.2 18H13.6837C13.0597 18 12.7477 18 12.4492 18.0613C12.1844 18.1156 11.9282 18.2055 11.6875 18.3285C11.4162 18.4671 11.1725 18.662 10.6852 19.0518L8.29976 20.9602C7.88367 21.2931 7.67563 21.4595 7.50054 21.4597C7.34827 21.4599 7.20422 21.3906 7.10923 21.2716C7 21.1348 7 20.8684 7 20.3355V18C6.07003 18 5.60504 18 5.22354 17.8978C4.18827 17.6204 3.37962 16.8117 3.10222 15.7765C3 15.395 3 14.93 3 14V7.8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <span>4</span>
-                    </span>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-600"></div>
-                      <span>Last comment 1d ago</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Post 2 */}
-            <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
-              <div className="flex items-start space-x-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white text-sm font-bold">
-                  J
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <span className="font-semibold text-black">James</span>
-                    <span className="text-[#626262] text-sm">5d • 💬 General</span>
-                  </div>
-                  <h3 className="font-bold text-black text-xl mb-2">Best practices for prompt engineering? 🤖</h3>
-                  <p className="text-[#626262] mb-3">I&apos;m building an AI app that generates marketing copy. What are your go-to techniques for getting consistent, high-quality outputs from LLMs?</p>
-                  <div className="flex items-center space-x-6 text-[#626262] text-sm">
-                    <button 
-                      onClick={() => handleLike(2)}
-                      className={`flex items-center space-x-1 hover:opacity-70 transition-all duration-200 cursor-pointer ${post2Liked ? 'text-[#3B81F5]' : 'text-[#626262]'}`}
-                    >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill={post2Liked ? 'currentColor' : 'none'} xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 22V11M2 13V20C2 21.1046 2.89543 22 4 22H17.4262C18.907 22 20.1662 20.9197 20.3914 19.4562L21.4683 12.4562C21.7479 10.6389 20.3418 9 18.5032 9H15C14.4477 9 14 8.55228 14 8V4.46584C14 3.10399 12.896 2 11.5342 2C11.2093 2 10.915 2.1913 10.7831 2.48812L7.26394 10.4061C7.10344 10.7673 6.74532 11 6.35013 11H4C2.89543 11 2 11.8954 2 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <span className="min-w-[8px] text-center">{post2Liked ? 9 : 8}</span>
-                    </button>
-                    <span className="flex items-center space-x-1">
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V13.2C21 14.8802 21 15.7202 20.673 16.362C20.3854 16.9265 19.9265 17.3854 19.362 17.673C18.7202 18 17.8802 18 16.2 18H13.6837C13.0597 18 12.7477 18 12.4492 18.0613C12.1844 18.1156 11.9282 18.2055 11.6875 18.3285C11.4162 18.4671 11.1725 18.662 10.6852 19.0518L8.29976 20.9602C7.88367 21.2931 7.67563 21.4595 7.50054 21.4597C7.34827 21.4599 7.20422 21.3906 7.10923 21.2716C7 21.1348 7 20.8684 7 20.3355V18C6.07003 18 5.60504 18 5.22354 17.8978C4.18827 17.6204 3.37962 16.8117 3.10222 15.7765C3 15.395 3 14.93 3 14V7.8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <span>12</span>
-                    </span>
-                    <div className="flex items-center space-x-2">
-                      <div className="flex -space-x-1">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white"></div>
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-2 border-white"></div>
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 border-2 border-white"></div>
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-red-400 to-red-600 border-2 border-white"></div>
+            {/* Dynamic Posts */}
+            {posts.map((post) => {
+              const user = getUserById(post.userId);
+              if (!user) {
+                console.warn(`User not found for post ${post.id} with userId: ${post.userId}`);
+                return null; // Skip rendering this post if user doesn't exist
+              }
+              
+              const isLiked = likedPosts[post.id] || false;
+              const currentLikes = post.likes + (isLiked ? 1 : 0);
+              
+              return (
+                <div key={post.id} className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
+                  <PostAuthor 
+                    user={user}
+                    timeAgo={post.timeAgo}
+                    category={post.category}
+                    categoryIcon={post.categoryIcon}
+                  />
+                  <div className="ml-15">
+                    <h3 className="font-bold text-black text-xl mb-2">{post.title}</h3>
+                    <p className="text-[#626262] mb-3">{post.content}</p>
+                    <div className="flex items-center space-x-6 text-[#626262] text-sm">
+                      <button 
+                        onClick={() => handleLike(post.id)}
+                        className={`flex items-center space-x-1 hover:opacity-70 transition-all duration-200 cursor-pointer ${isLiked ? 'text-[#3B81F5]' : 'text-[#626262]'}`}
+                      >
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} xmlns="http://www.w3.org/2000/svg">
+                          <path d="M7 22V11M2 13V20C2 21.1046 2.89543 22 4 22H17.4262C18.907 22 20.1662 20.9197 20.3914 19.4562L21.4683 12.4562C21.7479 10.6389 20.3418 9 18.5032 9H15C14.4477 9 14 8.55228 14 8V4.46584C14 3.10399 12.896 2 11.5342 2C11.2093 2 10.915 2.1913 10.7831 2.48812L7.26394 10.4061C7.10344 10.7673 6.74532 11 6.35013 11H4C2.89543 11 2 11.8954 2 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        <span className="min-w-[8px] text-center">{currentLikes}</span>
+                      </button>
+                      <span className="flex items-center space-x-1">
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3 7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V13.2C21 14.8802 21 15.7202 20.673 16.362C20.3854 16.9265 19.9265 17.3854 19.362 17.673C18.7202 18 17.8802 18 16.2 18H13.6837C13.0597 18 12.7477 18 12.4492 18.0613C12.1844 18.1156 11.9282 18.2055 11.6875 18.3285C11.4162 18.4671 11.1725 18.662 10.6852 19.0518L8.29976 20.9602C7.88367 21.2931 7.67563 21.4595 7.50054 21.4597C7.34827 21.4599 7.20422 21.3906 7.10923 21.2716C7 21.1348 7 20.8684 7 20.3355V18C6.07003 18 5.60504 18 5.22354 17.8978C4.18827 17.6204 3.37962 16.8117 3.10222 15.7765C3 15.395 3 14.93 3 14V7.8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        <span>{post.comments}</span>
+                      </span>
+                      <div className="flex items-center space-x-2">
+                        {post.commenters && post.commenters.length > 0 ? (
+                          <div className={`flex ${post.commenters.length > 1 ? '-space-x-1' : ''}`}>
+                            {post.commenters.slice(0, 4).map((commenterId, index) => {
+                              const commenter = getUserById(commenterId);
+                              return commenter ? (
+                                <Avatar
+                                  key={commenter.id}
+                                  user={commenter}
+                                  size="sm"
+                                  showBorder={post.commenters!.length > 1}
+                                />
+                              ) : null;
+                            })}
+                          </div>
+                        ) : (
+                          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-400 to-gray-600"></div>
+                        )}
+                        <span>Last comment {post.lastCommentTime}</span>
                       </div>
-                      <span>Last comment 3d ago</span>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              );
+            })}
 
-            {/* Post 3 */}
-            <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
-              <div className="flex items-start space-x-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white text-sm font-bold">
-                  R
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <span className="font-semibold text-black">Robert</span>
-                    <span className="text-[#626262] text-sm">1w • 👋 Introductions</span>
-                  </div>
-                  <h3 className="font-bold text-black text-xl mb-2">New here - excited to learn! 👋</h3>
-                  <p className="text-[#626262] mb-3">Just joined the community after struggling with my first AI project. Looking forward to learning from everyone and building something amazing together!</p>
-                  <div className="flex items-center space-x-6 text-[#626262] text-sm">
-                    <button 
-                      onClick={() => handleLike(3)}
-                      className={`flex items-center space-x-1 hover:opacity-70 transition-all duration-200 cursor-pointer ${post3Liked ? 'text-[#3B81F5]' : 'text-[#626262]'}`}
-                    >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill={post3Liked ? 'currentColor' : 'none'} xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 22V11M2 13V20C2 21.1046 2.89543 22 4 22H17.4262C18.907 22 20.1662 20.9197 20.3914 19.4562L21.4683 12.4562C21.7479 10.6389 20.3418 9 18.5032 9H15C14.4477 9 14 8.55228 14 8V4.46584C14 3.10399 12.896 2 11.5342 2C11.2093 2 10.915 2.1913 10.7831 2.48812L7.26394 10.4061C7.10344 10.7673 6.74532 11 6.35013 11H4C2.89543 11 2 11.8954 2 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <span className="min-w-[8px] text-center">{post3Liked ? 6 : 5}</span>
-                    </button>
-                    <span className="flex items-center space-x-1">
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V13.2C21 14.8802 21 15.7202 20.673 16.362C20.3854 16.9265 19.9265 17.3854 19.362 17.673C18.7202 18 17.8802 18 16.2 18H13.6837C13.0597 18 12.7477 18 12.4492 18.0613C12.1844 18.1156 11.9282 18.2055 11.6875 18.3285C11.4162 18.4671 11.1725 18.662 10.6852 19.0518L8.29976 20.9602C7.88367 21.2931 7.67563 21.4595 7.50054 21.4597C7.34827 21.4599 7.20422 21.3906 7.10923 21.2716C7 21.1348 7 20.8684 7 20.3355V18C6.07003 18 5.60504 18 5.22354 17.8978C4.18827 17.6204 3.37962 16.8117 3.10222 15.7765C3 15.395 3 14.93 3 14V7.8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <span>3</span>
-                    </span>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-blue-600"></div>
-                      <span>Last comment 5d ago</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Right Column - Leaderboard */}
@@ -507,26 +433,8 @@ export default function Home() {
               <div>
                 <h3 className="font-bold text-black text-lg mb-4">Leaderboard</h3>
                 <div className="space-y-3">
-                  {[
-                    { rank: 1, name: "Michael", points: "1850", avatar: "from-blue-400 to-blue-600" },
-                    { rank: 2, name: "James", points: "1580", avatar: "from-purple-400 to-purple-600" },
-                    { rank: 3, name: "Robert", points: "990", avatar: "from-green-400 to-green-600" },
-                    { rank: 4, name: "Jennifer", points: "845", avatar: "from-amber-400 to-orange-600" },
-                    { rank: 5, name: "David", points: "720", avatar: "from-red-400 to-red-600" },
-                    { rank: 6, name: "Sarah", points: "675", avatar: "from-indigo-400 to-indigo-600" },
-                    { rank: 7, name: "Jessica", points: "550", avatar: "from-pink-400 to-pink-600" },
-                    { rank: 8, name: "Christopher", points: "480", avatar: "from-teal-400 to-teal-600" },
-                    { rank: 9, name: "Ashley", points: "420", avatar: "from-orange-400 to-yellow-600" },
-                    { rank: 10, name: "Matthew", points: "380", avatar: "from-cyan-400 to-cyan-600" }
-                  ].map((user) => (
-                    <div key={user.rank} className="flex items-center space-x-3">
-                      <span className="w-6 text-center font-semibold text-[#626262] text-sm">{user.rank}</span>
-                      <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${user.avatar}`}></div>
-                      <div className="flex-1">
-                        <div className="font-medium text-black text-sm">{user.name}</div>
-                      </div>
-                      <div className="text-[#3B81F5] font-semibold text-sm">{user.points}</div>
-                    </div>
+                  {topUsers.map((user) => (
+                    <LeaderboardEntry key={user.id} user={user} />
                   ))}
                 </div>
               </div>

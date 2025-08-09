@@ -230,6 +230,7 @@ export function DecorativeLines({
     let bottomLineY = dimensions.height;
     
     if (elementType === 'button') {
+      topLineY += 2; // Move top line 2px down for buttons
       bottomLineY += 6; // Move bottom line 6px down for buttons
     } else if (elementType === 'avatars') {
       topLineY -= 2; // Move top line 2px more up for avatars
