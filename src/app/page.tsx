@@ -303,9 +303,8 @@ export default function Home() {
       {/* Profile Images with background lines */}
       <div className="mb-12 mt-12 w-full max-w-xl mx-auto flex justify-center">
         <DecorativeLines edgeAlign={true} verticalExtension={3} elementType="avatars">
-          <div className="h-12 flex items-center space-x-3">
+          <div className="h-12 flex items-center">
             <AvatarGroup users={communityAvatars} size="lg" overlap={true} />
-            <span className="text-lg font-semibold text-[#626262]">+12</span>
           </div>
         </DecorativeLines>
       </div>
@@ -384,33 +383,67 @@ export default function Home() {
             {lessons.map((lesson, index) => (
               <div key={index} className="border-b border-gray-200 last:border-b-0">
                 <div 
-                  className="px-8 py-6 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
+                  className="px-8 py-6 hover:bg-gray-50 transition-colors cursor-pointer"
                   onClick={() => handleLessonClick(index)}
                 >
-                  <div>
-                    <h4 className="text-lg font-semibold text-black mb-1">{lesson.formattedTitle}</h4>
+                  {/* Mobile Layout */}
+                  <div className="block md:hidden">
+                    {/* Badge above title on mobile */}
+                    <div className="mb-2">
+                      {lesson.status === "released" ? (
+                        <span className="px-3 py-1 bg-green-50 text-[#2ECC71] text-sm font-medium rounded-md flex items-center space-x-2 w-fit">
+                          <div className="w-2 h-2 bg-[#2ECC71] rounded-full"></div>
+                          <span>Released</span>
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 bg-yellow-50 text-[#F4B400] text-sm font-medium rounded-md w-fit">
+                          Coming Soon
+                        </span>
+                      )}
+                    </div>
+                    {/* Title and arrow */}
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-lg font-semibold text-black">{lesson.formattedTitle}</h4>
+                      <svg 
+                        className={`w-5 h-5 text-[#626262] transform transition-transform duration-300 ${
+                          expandedLesson === index ? 'rotate-180' : ''
+                        }`}
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    {lesson.status === "released" ? (
-                      <span className="px-3 py-1 bg-green-50 text-[#2ECC71] text-sm font-medium rounded-md flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-[#2ECC71] rounded-full"></div>
-                        <span>Released</span>
-                      </span>
-                    ) : (
-                      <span className="px-3 py-1 bg-yellow-50 text-[#F4B400] text-sm font-medium rounded-md">
-                        Coming Soon
-                      </span>
-                    )}
-                    <svg 
-                      className={`w-5 h-5 text-[#626262] transform transition-transform duration-300 ${
-                        expandedLesson === index ? 'rotate-180' : ''
-                      }`}
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+
+                  {/* Desktop Layout */}
+                  <div className="hidden md:flex items-center justify-between">
+                    <div>
+                      <h4 className="text-lg font-semibold text-black mb-1">{lesson.formattedTitle}</h4>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      {lesson.status === "released" ? (
+                        <span className="px-3 py-1 bg-green-50 text-[#2ECC71] text-sm font-medium rounded-md flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-[#2ECC71] rounded-full"></div>
+                          <span>Released</span>
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 bg-yellow-50 text-[#F4B400] text-sm font-medium rounded-md">
+                          Coming Soon
+                        </span>
+                      )}
+                      <svg 
+                        className={`w-5 h-5 text-[#626262] transform transition-transform duration-300 ${
+                          expandedLesson === index ? 'rotate-180' : ''
+                        }`}
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
                 
@@ -441,9 +474,9 @@ export default function Home() {
         </p>
         
         {/* Community Interface Mockup */}
-        <div className="grid grid-cols-12 gap-6">
-          {/* Left Column - Posts */}
-          <div className="col-span-8 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Posts Section */}
+          <div className="lg:col-span-8 space-y-6">
             {/* Write Something Section */}
             <div className="transition-all duration-500 ease-in-out bg-white rounded-2xl shadow-xs border border-gray-200" data-write-container>
               <div className="p-4">
@@ -575,8 +608,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Navigation Tabs */}
-            <div className="flex items-center space-x-3 w-full">
+            {/* Navigation Tabs - Hidden on mobile */}
+            <div className="hidden lg:flex items-center space-x-3 w-full">
               <button 
                 onClick={() => handleCategoryClick('All')}
                 className={`px-6 py-3 border rounded-xl text-sm font-medium flex-1 text-center transition-colors duration-200 cursor-pointer ${
@@ -711,8 +744,8 @@ export default function Home() {
 
           </div>
 
-          {/* Right Column - Leaderboard */}
-          <div className="col-span-4">
+          {/* Leaderboard - Right column on desktop, below posts on mobile */}
+          <div className="lg:col-span-4">
             <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
               {/* Leaderboard */}
               <div>
@@ -763,8 +796,8 @@ export default function Home() {
           Exclusive benefits for Builder&apos;s Club members
         </p>
         
-        {/* Benefits Grid - 3 columns, 2 rows */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Benefits Grid - Responsive: 1 column mobile, 2 columns tablet, 3 columns desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Benefit 1 */}
           <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-8">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-[#3478F2] to-[#2663EB] flex items-center justify-center mb-4 shadow-[0_3px_0_0_#1E40AF] transform transition-all duration-150">
@@ -772,7 +805,7 @@ export default function Home() {
                 <path d="M7 15L10 12L7 9M13 15H17M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-black mb-3">Master the Modern AI Tech Stack</h3>
+            <h3 className="text-[20px] font-bold text-black mb-3">Master the Modern AI Tech Stack</h3>
             <p className="text-[#626262] leading-relaxed">Learn Next.js, Supabase, Stripe, GitHub & more – the stack of top startups – while coding with AI in Cursor and Claude Code.</p>
           </div>
 
@@ -783,7 +816,7 @@ export default function Home() {
                 <path d="M7.5 4.5C7.5 3.11929 8.61929 2 10 2C11.3807 2 12.5 3.11929 12.5 4.5V6H13.5C14.8978 6 15.5967 6 16.1481 6.22836C16.8831 6.53284 17.4672 7.11687 17.7716 7.85195C18 8.40326 18 9.10218 18 10.5H19.5C20.8807 10.5 22 11.6193 22 13C22 14.3807 20.8807 15.5 19.5 15.5H18V17.2C18 18.8802 18 19.7202 17.673 20.362C17.3854 20.9265 16.9265 21.3854 16.362 21.673C15.7202 22 14.8802 22 13.2 22H12.5V20.25C12.5 19.0074 11.4926 18 10.25 18C9.00736 18 8 19.0074 8 20.25V22H6.8C5.11984 22 4.27976 22 3.63803 21.673C3.07354 21.3854 2.6146 20.9265 2.32698 20.362C2 19.7202 2 18.8802 2 17.2V15.5H3.5C4.88071 15.5 6 14.3807 6 13C6 11.6193 4.88071 10.5 3.5 10.5H2C2 9.10218 2 8.40326 2.22836 7.85195C2.53284 7.11687 3.11687 6.53284 3.85195 6.22836C4.40326 6 5.10218 6 6.5 6H7.5V4.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-black mb-3">No Coding Experience Required</h3>
+            <h3 className="text-[20px] font-bold text-black mb-3">No Coding Experience Required</h3>
             <p className="text-[#626262] leading-relaxed">Designed for non-technical founders – learn to think like a modern product engineer and let AI handle the heavy lifting.</p>
           </div>
 
@@ -795,7 +828,7 @@ export default function Home() {
                 <path d="M2 9.8C2 8.11984 2 7.27976 2.32698 6.63803C2.6146 6.07354 3.07354 5.6146 3.63803 5.32698C4.27976 5 5.11984 5 6.8 5H12.2C13.8802 5 14.7202 5 15.362 5.32698C15.9265 5.6146 16.3854 6.07354 16.673 6.63803C17 7.27976 17 8.11984 17 9.8V14.2C17 15.8802 17 16.7202 16.673 17.362C16.3854 17.9265 15.9265 18.3854 15.362 18.673C14.7202 19 13.8802 19 12.2 19H6.8C5.11984 19 4.27976 19 3.63803 18.673C3.07354 18.3854 2.6146 17.9265 2.32698 17.362C2 16.7202 2 15.8802 2 14.2V9.8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-black mb-3">Step-by-step Learning</h3>
+            <h3 className="text-[20px] font-bold text-black mb-3">Step-by-step Learning</h3>
             <p className="text-[#626262] leading-relaxed">Stop wasting hours on random YouTube tutorials. Follow a clear, structured path that takes you from idea to launched app fast.</p>
           </div>
 
@@ -806,7 +839,7 @@ export default function Home() {
                 <path d="M12 15L9 12M12 15C13.3968 14.4687 14.7369 13.7987 16 13M12 15V20C12 20 15.03 19.45 16 18C17.08 16.38 16 13 16 13M9 12C9.53214 10.6194 10.2022 9.29606 11 8.05C12.1652 6.18699 13.7876 4.65305 15.713 3.59409C17.6384 2.53513 19.8027 1.98637 22 2C22 4.72 21.22 9.5 16 13M9 12H4C4 12 4.55 8.97 6 8C7.62 6.92 11 8 11 8M4.5 16.5C3 17.76 2.5 21.5 2.5 21.5C2.5 21.5 6.24 21 7.5 19.5C8.21 18.66 8.2 17.37 7.41 16.59C7.02131 16.219 6.50929 16.0046 5.97223 15.988C5.43516 15.9714 4.91088 16.1537 4.5 16.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-black mb-3">Build Your Dream App</h3>
+            <h3 className="text-[20px] font-bold text-black mb-3">Build Your Dream App</h3>
             <p className="text-[#626262] leading-relaxed">Turn your idea into a production-ready app in days, not months. Secure, high-performance, and ready to launch.</p>
           </div>
 
@@ -817,7 +850,7 @@ export default function Home() {
                 <path d="M16 3.46776C17.4817 4.20411 18.5 5.73314 18.5 7.5C18.5 9.26686 17.4817 10.7959 16 11.5322M18 16.7664C19.5115 17.4503 20.8725 18.565 22 20M2 20C3.94649 17.5226 6.58918 16 9.5 16C12.4108 16 15.0535 17.5226 17 20M14 7.5C14 9.98528 11.9853 12 9.5 12C7.01472 12 5 9.98528 5 7.5C5 5.01472 7.01472 3 9.5 3C11.9853 3 14 5.01472 14 7.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-black mb-3">Exclusive Builder&apos;s Community</h3>
+            <h3 className="text-[20px] font-bold text-black mb-3">Exclusive Builder&apos;s Community</h3>
             <p className="text-[#626262] leading-relaxed">Join an invite-only network of serious founders. Get accountability partners, build in public, and connect with fellow builders.</p>
           </div>
 
@@ -828,7 +861,7 @@ export default function Home() {
                 <path d="M8.5 14.6667C8.5 15.9553 9.54467 17 10.8333 17H13C14.3807 17 15.5 15.8807 15.5 14.5C15.5 13.1193 14.3807 12 13 12H11C9.61929 12 8.5 10.8807 8.5 9.5C8.5 8.11929 9.61929 7 11 7H13.1667C14.4553 7 15.5 8.04467 15.5 9.33333M12 5.5V7M12 17V18.5M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-black mb-3">Launch & Monetize Confidently</h3>
+            <h3 className="text-[20px] font-bold text-black mb-3">Launch & Monetize Confidently</h3>
             <p className="text-[#626262] leading-relaxed">Validate your idea, learn to integrate Stripe for payments of premium features, and start making money from your app.</p>
           </div>
         </div>
@@ -849,9 +882,9 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           
           {/* Monthly Plan */}
-          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-8 pt-20 relative flex flex-col mt-24">
+          <div className="group bg-white rounded-2xl shadow-xs border border-gray-200 p-8 pt-20 relative flex flex-col mt-24">
             {/* Overlapping Image */}
-            <div className="absolute -top-20 left-4 w-56 h-auto z-10">
+            <div className="absolute -top-20 left-4 w-56 h-auto z-10 transition-transform duration-300 group-hover:rotate-[7.64deg]">
               <Image
                 src="/images/builders-club-card.png"
                 alt="Join Builders Club"
@@ -921,9 +954,9 @@ export default function Home() {
           </div>
 
           {/* Yearly Plan */}
-          <div className="bg-black rounded-2xl shadow-xs border border-gray-800 p-8 pt-20 relative flex flex-col mt-24">
+          <div className="group bg-black rounded-2xl shadow-xs border border-gray-800 p-8 pt-20 relative flex flex-col mt-24">
             {/* Overlapping Image */}
-            <div className="absolute -top-20 left-4 w-56 h-auto z-10">
+            <div className="absolute -top-20 left-4 w-56 h-auto z-10 transition-transform duration-300 group-hover:rotate-[7.64deg]">
               <Image
                 src="/images/builders-club-card.png"
                 alt="Join Builders Club"
@@ -951,7 +984,7 @@ export default function Home() {
             </div>
             
             {/* Separator Line */}
-            <div className="border-t border-gray-700 my-8"></div>
+            <div className="border-t border-gray-300 my-8"></div>
             
             <div className="space-y-4 mb-8 flex-grow">
               <div className="flex items-center space-x-3">

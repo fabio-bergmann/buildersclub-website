@@ -13,7 +13,7 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        sans: ["var(--font-inter-display)", "sans-serif"],
+        sans: ["var(--font-figtree)", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {
