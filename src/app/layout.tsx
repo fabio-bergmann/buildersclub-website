@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
+import { Footer } from "./components/Footer";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
         className={`${figtree.variable} font-sans antialiased`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );

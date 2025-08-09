@@ -299,7 +299,7 @@ export default function Home() {
     }, 15000);
   };
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center px-4 pt-32 pb-20">
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center px-4 pt-32">
       {/* Profile Images with background lines */}
       <div className="mb-12 mt-12 w-full max-w-xl mx-auto flex justify-center">
         <DecorativeLines edgeAlign={true} verticalExtension={3} elementType="avatars">
