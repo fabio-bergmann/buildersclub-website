@@ -5,14 +5,15 @@ export function Footer() {
       <div className="w-full bg-black py-12">
         <div className="max-w-6xl mx-auto px-6">
           <h1 
-            className="text-white font-bold leading-none tracking-tight"
+            className="font-bold leading-none tracking-tight"
             style={{ 
               fontSize: '80px',
               fontFamily: 'inherit',
               textRendering: 'optimizeLegibility',
               WebkitFontSmoothing: 'antialiased',
               lineHeight: '1',
-              margin: '0'
+              margin: '0',
+              color: '#626262'
             }}
           >
             Builder&apos;s Club

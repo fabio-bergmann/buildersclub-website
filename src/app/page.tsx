@@ -406,7 +406,7 @@ export default function Home() {
             <div className="text-left">
               <h3 className="text-xl font-bold text-black mb-1">Fabio Bergmann</h3>
               <p className="text-[#626262] text-base mb-2">
-                Founder of Builder's Club and <a 
+                Founder of Builder&apos;s Club and <a 
                   href="https://sprike.co/" 
                   target="_blank"
                   rel="noopener noreferrer"
