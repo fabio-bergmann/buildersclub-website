@@ -7,6 +7,7 @@ interface AvatarProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showBorder?: boolean;
   className?: string;
+  priority?: boolean;
 }
 
 const sizeClasses = {
@@ -20,7 +21,8 @@ export function Avatar({
   user, 
   size = 'lg', 
   showBorder = false, 
-  className = '' 
+  className = '',
+  priority = false
 }: AvatarProps) {
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
@@ -64,7 +66,7 @@ export function Avatar({
             setImageError(true);
             setImageLoading(false);
           }}
-          priority={size === 'xl'} // Prioritize loading for larger avatars
+          priority={priority || size === 'xl'} // Prioritize loading for larger avatars or when explicitly set
         />
       ) : (
         <span className={imageLoading && showImage ? 'opacity-0' : 'opacity-100'}>
@@ -89,6 +91,7 @@ interface AvatarGroupProps {
   maxDisplay?: number;
   overlap?: boolean;
   className?: string;
+  priority?: boolean;
 }
 
 export function AvatarGroup({ 
@@ -96,7 +99,8 @@ export function AvatarGroup({
   size = 'xl', 
   maxDisplay = 6, 
   overlap = true,
-  className = '' 
+  className = '',
+  priority = false
 }: AvatarGroupProps) {
   const displayUsers = users.slice(0, maxDisplay);
   const overlapClass = overlap ? 'space-x-[-12px]' : 'space-x-2';
@@ -110,6 +114,7 @@ export function AvatarGroup({
           size={size}
           showBorder={overlap}
           className={overlap ? 'shadow-lg' : ''}
+          priority={priority}
         />
       ))}
     </div>

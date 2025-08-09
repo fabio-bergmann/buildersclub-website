@@ -35,6 +35,20 @@ export default function Home() {
   const youUser = getUserById('you')!;
   const topUsers = getTopUsers(9); // 9 users + potential user = max 10
 
+  // Preload all community avatars for smoother loading
+  useEffect(() => {
+    const preloadAvatars = () => {
+      communityAvatars
+        .filter(user => user.avatarImage)
+        .forEach(user => {
+          const img = new window.Image();
+          img.src = user.avatarImage!;
+        });
+    };
+
+    preloadAvatars();
+  }, [communityAvatars]);
+
   const faqItems = [
     {
       id: "1",
@@ -298,13 +312,15 @@ export default function Home() {
       ));
     }, 15000);
   };
+
+
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center px-4 pt-32">
       {/* Profile Images with background lines */}
       <div className="mb-12 mt-12 w-full max-w-xl mx-auto flex justify-center">
         <DecorativeLines edgeAlign={true} verticalExtension={3} elementType="avatars">
           <div className="h-12 flex items-center">
-            <AvatarGroup users={communityAvatars} size="lg" overlap={true} />
+            <AvatarGroup users={communityAvatars} size="lg" overlap={true} priority={true} />
           </div>
         </DecorativeLines>
       </div>
@@ -394,7 +410,7 @@ export default function Home() {
                   href="https://sprike.co/" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#626262] no-underline hover:text-[#626262] cursor-pointer"
+                  className="text-[#626262] no-underline hover:text-[#626262] hover:underline cursor-pointer"
                 >Sprike</a>
               </p>
               
