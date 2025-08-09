@@ -592,13 +592,13 @@ export default function Home() {
                             }}
                             className="px-6 py-2 text-[#626262] text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
                           >
-                            CANCEL
+                            Cancel
                           </button>
                           <button 
                             onClick={handlePost}
                             className="px-6 py-2 bg-[#3478F2] text-white text-sm font-medium rounded-lg hover:bg-[#2563EB] transition-colors duration-200"
                           >
-                            POST
+                            Post
                           </button>
                         </div>
                       </div>
@@ -793,7 +793,7 @@ export default function Home() {
         
         {/* Benefits Subheadline */}
         <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-          Exclusive benefits for Builder&apos;s Club members
+          What you&apos;ll get when joining Builder&apos;s Club
         </p>
         
         {/* Benefits Grid - Responsive: 1 column mobile, 2 columns tablet, 3 columns desktop */}
