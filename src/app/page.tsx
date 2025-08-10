@@ -62,7 +62,7 @@ export default function Home() {
       id: "3",
       title: "Do I need any previous coding experience?",
       content:
-        "Absolutely. No coding experience is required. Many of our members started as complete beginners — I'll take you from zero to a finished, production-ready app.",
+        "No coding experience is required. Many of our members are non-technical andstarted as complete beginners — I'll take you from zero to a finished, production-ready app.",
     },
     {
       id: "4",
@@ -447,7 +447,7 @@ export default function Home() {
       </div>
 
       {/* Course Section */}
-      <div className="w-full max-w-6xl mt-44">
+      <div className="w-full max-w-4xl mt-44">
         {/* Course Main Headline */}
         <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Course</h2>
         
@@ -981,8 +981,8 @@ export default function Home() {
             {/* Overlapping Image */}
             <div className="absolute -top-20 left-4 w-56 h-auto z-10 transition-transform duration-300 group-hover:rotate-[7.64deg]">
               <Image
-                src="/images/builders-club-card.png"
-                alt="Join Builders Club"
+                src="/images/card-monthly.png"
+                alt="Monthly Membership"
                 width={300}
                 height={225}
                 className="w-full h-auto object-contain rounded-2xl"
@@ -1053,8 +1053,8 @@ export default function Home() {
             {/* Overlapping Image */}
             <div className="absolute -top-20 left-4 w-56 h-auto z-10 transition-transform duration-300 group-hover:rotate-[7.64deg]">
               <Image
-                src="/images/builders-club-card.png"
-                alt="Join Builders Club"
+                src="/images/card-yearly.png"
+                alt="Yearly Membership"
                 width={300}
                 height={225}
                 className="w-full h-auto object-contain rounded-2xl"
