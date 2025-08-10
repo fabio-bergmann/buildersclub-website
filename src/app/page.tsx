@@ -4,12 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { MainButton } from './components/MainButton';
 import { DecorativeLines } from './components/DecorativeLines';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { getLessons, getLessonCount } from '@/data/lessons';
 import { getCommunityAvatars, getUserById, posts, getTopUsers } from '@/data/users';
 import { AvatarGroup, Avatar } from './components/Avatar';
@@ -21,6 +15,8 @@ export default function Home() {
   const [postTitle, setPostTitle] = useState('');
   const [isWriteExpanded, setIsWriteExpanded] = useState(false);
   const [expandedLesson, setExpandedLesson] = useState<number | null>(null);
+  const [expandedFaq, setExpandedFaq] = useState<string | null>("1"); // Default to first FAQ item open
+  const [closingFaq, setClosingFaq] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
   const [postCategory, setPostCategory] = useState('General');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -52,39 +48,45 @@ export default function Home() {
   const faqItems = [
     {
       id: "1",
-      title: "What makes AI Builders Club different from other courses?",
+      title: "Is there a refund policy?",
       content:
-        "AI Builders Club focuses on practical, hands-on learning with real-world projects. You&apos;ll build actual AI applications from scratch, learn cutting-edge techniques, and join a community of builders who support each other&apos;s growth.",
+        "Yes! I'm confident you'll love Builder's Club, but if you feel it's not the right fit, I offer a 7-day money-back guarantee — no questions asked.",
     },
     {
       id: "2",
-      title: "How long does it take to complete the course?",
+      title: "Who is Builder's Club for?",
       content:
-        "The course contains 60 lessons totaling 10 hours and 4 minutes of content. Most students complete it in 4-6 weeks studying part-time, but you have lifetime access to learn at your own pace.",
+        "Builder's Club is for non-technical founders serious about building their own apps, and business owners who want to develop internal tools to streamline their processes.",
     },
     {
       id: "3",
-      title: "What if I&apos;m a complete beginner to AI development?",
+      title: "Do I need any previous coding experience?",
       content:
-        "Perfect! The course is designed for beginners. We start with fundamentals and gradually build up to advanced concepts. You'll learn everything from basic prompt engineering to building complex AI agents.",
+        "Absolutely. No coding experience is required. Many of our members started as complete beginners — I'll take you from zero to a finished, production-ready app.",
     },
     {
       id: "4",
-      title: "Do I get access to the community forever?",
+      title: "What tech stack will I learn?",
       content:
-        "Yes! Your membership includes lifetime access to our exclusive community where you can network with fellow builders, get help with projects, and stay updated on the latest AI developments.",
+        "You'll learn modern AI-powered development tools and frameworks, including: Claude Code & Cursor (AI coding), Next.js (frontend framework), Supabase, Vercel, GitHub, Resend, Stripe, and more.",
     },
     {
       id: "5",
-      title: "What kind of projects will I build?",
+      title: "What if I get stuck or need support?",
       content:
-        "You&apos;ll build real AI applications including customer support bots, content generation tools, AI-powered SaaS applications with payment systems, and much more. Each project teaches practical skills you can use professionally.",
+        "You're never alone — the community includes me and other experienced builders ready to help. Post your question and you'll get a response within 24 hours (often much faster). I'll also teach you how to debug problems yourself so you can grow as an independent builder.",
     },
     {
       id: "6",
-      title: "Is there a money-back guarantee?",
+      title: "What can I do with this knowledge?",
       content:
-        "Yes! We offer a 30-day money-back guarantee. If you&apos;re not completely satisfied with the course content and community, we&apos;ll refund your purchase, no questions asked.",
+        "With the skills you'll gain, you can: Build your own SaaS or AI product, Create internal tools to automate and improve your business processes.",
+    },
+    {
+      id: "7",
+      title: "I have another question.",
+      content:
+        "Email me anytime at <a href='mailto:fabio@buildersclub.co' className='text-blue-600 hover:text-blue-800 underline'>fabio@buildersclub.co</a> — I'm happy to help.",
     },
   ];
 
@@ -386,7 +388,7 @@ export default function Home() {
       </div>
 
       {/* Instructor Section */}
-      <div className="w-full max-w-4xl mb-20">
+      <div className="w-full max-w-4xl">
         <p className="text-[#626262] text-lg text-center mb-4" style={{ fontFamily: 'var(--font-caveat), cursive' }}>Hosted by</p>
         <div className="flex items-center justify-center">
           {/* Profile Image */}
@@ -445,7 +447,7 @@ export default function Home() {
       </div>
 
       {/* Course Section */}
-      <div className="w-full max-w-4xl mt-32">
+      <div className="w-full max-w-6xl mt-44">
         {/* Course Main Headline */}
         <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Course</h2>
         
@@ -557,7 +559,7 @@ export default function Home() {
       </div>
 
       {/* Community Section */}
-      <div className="w-full max-w-6xl mt-32">
+      <div className="w-full max-w-6xl mt-44">
         {/* Community Main Headline */}
         <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Community</h2>
         
@@ -880,7 +882,7 @@ export default function Home() {
       </div>
 
       {/* Benefits Section */}
-      <div className="w-full max-w-6xl mt-32">
+      <div className="w-full max-w-6xl mt-44">
         {/* Benefits Main Headline */}
         <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Benefits</h2>
         
@@ -962,7 +964,7 @@ export default function Home() {
 
 
       {/* New Pricing Section - Designjoy Style */}
-      <div id="pricing-section" className="w-full max-w-6xl mt-32">
+      <div id="pricing-section" className="w-full max-w-6xl mt-44">
         {/* New Pricing Main Headline */}
         <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Join Builder&apos;s Club</h2>
         
@@ -1128,7 +1130,7 @@ export default function Home() {
       </div>
 
       {/* FAQ Section */}
-      <div className="w-full max-w-4xl mt-32">
+      <div className="w-full max-w-4xl mt-44">
         {/* FAQ Main Headline */}
         <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">FAQ</h2>
         
@@ -1137,19 +1139,61 @@ export default function Home() {
           Frequently asked questions about Builder&apos;s Club
         </p>
         
-        {/* FAQ Accordion */}
-        <Accordion type="single" collapsible className="w-full" defaultValue="1">
+        {/* FAQ Items */}
+        <div className="w-full">
           {faqItems.map((item) => (
-            <AccordionItem value={item.id} key={item.id} className="py-4 border-b border-gray-300 last:border-b-0">
-              <AccordionTrigger className="text-left text-lg font-semibold text-black hover:text-[#3478F2] focus-visible:ring-2 focus-visible:ring-[#3478F2] focus-visible:ring-offset-2 [&>svg]:text-[#626262] [&>svg]:w-5 [&>svg]:h-5">
-                {item.title}
-              </AccordionTrigger>
-              <AccordionContent className="text-[#626262] pb-4 pt-2 text-base leading-relaxed">
-                {item.content}
-              </AccordionContent>
-            </AccordionItem>
+            <div key={item.id} className="py-4 border-b border-gray-300 last:border-b-0">
+              <button 
+                className="w-full text-left text-lg font-semibold text-black hover:text-[#3478F2] focus-visible:ring-2 focus-visible:ring-[#3478F2] focus-visible:ring-offset-2 focus:outline-none py-2"
+                onClick={() => {
+                  if (expandedFaq === item.id) {
+                    // If clicking the same item, just close it
+                    setExpandedFaq(null);
+                  } else {
+                    // If clicking a different item, start closing animation for current item
+                    if (expandedFaq) {
+                      setClosingFaq(expandedFaq);
+                      // Small delay to allow closing to start, then open the new one
+                      setTimeout(() => {
+                        setExpandedFaq(item.id);
+                        setClosingFaq(null);
+                      }, 50);
+                    } else {
+                      // No item open, just open the new one
+                      setExpandedFaq(item.id);
+                    }
+                  }
+                }}
+              >
+                <div className="flex items-center justify-between w-full">
+                  <span>{item.title}</span>
+                  <svg 
+                    className={`w-5 h-5 text-[#626262] transform transition-transform duration-300 ${
+                      expandedFaq === item.id ? 'rotate-180' : ''
+                    }`}
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </button>
+              
+              {/* Expandable Content with smooth animation */}
+              <div 
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  (expandedFaq === item.id) ? 'max-h-96 opacity-100' : 
+                  (closingFaq === item.id) ? 'max-h-0 opacity-0' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className="text-[#626262] pb-4 pt-2 text-base leading-relaxed">
+                  <div dangerouslySetInnerHTML={{ __html: item.content }} />
+                </div>
+              </div>
+            </div>
           ))}
-        </Accordion>
+        </div>
       </div>
 
       {/* Spacer below FAQ section */}

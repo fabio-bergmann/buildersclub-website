@@ -3,7 +3,7 @@ export function Footer() {
     <footer className="w-full">
       {/* New Black Section with Builder's Club Text */}
       <div className="w-full bg-black py-12">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-4">
           <h1 
             className="font-bold leading-none tracking-tight"
             style={{ 
