@@ -29,22 +29,16 @@ export function Footer() {
             {/* Legal Links - Right side */}
             <div className="flex space-x-6">
               <a 
-                href="#" 
+                href="/tos" 
                 className="hover:text-gray-300 transition-colors duration-200"
               >
                 Terms of Service
               </a>
               <a 
-                href="#" 
+                href="/privacy-policy" 
                 className="hover:text-gray-300 transition-colors duration-200"
               >
                 Privacy Policy
-              </a>
-              <a 
-                href="#" 
-                className="hover:text-gray-300 transition-colors duration-200"
-              >
-                Cookie Policy
               </a>
             </div>
           </div>
