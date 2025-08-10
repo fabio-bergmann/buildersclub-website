@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Builder\'s Club',
@@ -11,12 +12,12 @@ export default function PrivacyPolicyPage() {
       <div className="container mx-auto max-w-4xl px-4 py-16">
         <div className="space-y-8">
           {/* Back Button */}
-          <a 
+          <Link 
             href="/" 
             className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
           >
             ← Back
-          </a>
+          </Link>
 
           {/* Page Title */}
           <div className="space-y-4">
@@ -27,17 +28,17 @@ export default function PrivacyPolicyPage() {
           {/* Introduction */}
           <div className="space-y-4">
             <p className="text-lg text-gray-700 leading-relaxed">
-              Builder's Club ("we," "our," or "us") is operated by Sprike LLC, 8 The Green, STE R, Dover, DE 19901, United States. We value your privacy and are committed to protecting your personal information. This Privacy Policy explains what we collect, how we use it, and your rights.
+              Builder&apos;s Club (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is operated by Sprike LLC, 8 The Green, STE R, Dover, DE 19901, United States. We value your privacy and are committed to protecting your personal information. This Privacy Policy explains what we collect, how we use it, and your rights.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              By using Builder's Club, you agree to this Privacy Policy.
+              By using Builder&apos;s Club, you agree to this Privacy Policy.
             </p>
           </div>
 
           {/* Section 1 */}
           <section className="space-y-4">
             <h3 className="text-2xl font-semibold text-gray-900">1. Information We Collect</h3>
-            <p className="text-gray-700">We collect the following information when you join Builder's Club:</p>
+            <p className="text-gray-700">We collect the following information when you join Builder&apos;s Club:</p>
             <ul className="space-y-2 text-gray-700 ml-6">
               <li className="list-disc"><strong>Personal details:</strong> Name, email address</li>
               <li className="list-disc"><strong>Billing information:</strong> Payment details processed securely by Stripe (we do not store your full card number)</li>
@@ -72,7 +73,7 @@ export default function PrivacyPolicyPage() {
           {/* Section 4 */}
           <section className="space-y-4">
             <h3 className="text-2xl font-semibold text-gray-900">4. Third-Party Services That Process Your Data</h3>
-            <p className="text-gray-700">We use trusted third-party services to run Builder's Club:</p>
+            <p className="text-gray-700">We use trusted third-party services to run Builder&apos;s Club:</p>
             <ul className="space-y-2 text-gray-700 ml-6">
               <li className="list-disc"><strong>Stripe</strong> – Payment processing</li>
               <li className="list-disc"><strong>Skool</strong> – Hosting course videos and community discussions</li>
@@ -109,7 +110,7 @@ export default function PrivacyPolicyPage() {
             <ul className="space-y-2 text-gray-700 ml-6">
               <li className="list-disc">Request a copy of your personal data</li>
               <li className="list-disc">Request deletion of your personal data</li>
-              <li className="list-disc">Opt out of marketing emails by clicking "unsubscribe" in any message</li>
+              <li className="list-disc">Opt out of marketing emails by clicking &quot;unsubscribe&quot; in any message</li>
             </ul>
             <p className="text-gray-700">
               To exercise these rights, email <a href="mailto:fabio@buildersclub.co" className="text-blue-600 hover:text-blue-800 underline font-medium">fabio@buildersclub.co</a>.

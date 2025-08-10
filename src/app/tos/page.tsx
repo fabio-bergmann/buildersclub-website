@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Terms of Service | Builder\'s Club',
@@ -11,12 +12,12 @@ export default function TermsOfServicePage() {
       <div className="container mx-auto max-w-4xl px-4 py-16">
         <div className="space-y-8">
           {/* Back Button */}
-          <a 
+          <Link 
             href="/" 
             className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
           >
             ← Back
-          </a>
+          </Link>
 
           {/* Page Title */}
           <div className="space-y-4">
@@ -27,10 +28,10 @@ export default function TermsOfServicePage() {
           {/* Introduction */}
           <div className="space-y-4">
             <p className="text-lg text-gray-700 leading-relaxed">
-              Welcome to Builder's Club ("we," "our," or "us"), operated by Sprike LLC, 8 The Green, STE R, Dover, DE 19901, United States. These Terms of Service ("Terms") govern your access to and use of the Builder's Club platform, including our courses, community, and resources (collectively, the "Service").
+              Welcome to Builder&apos;s Club (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;), operated by Sprike LLC, 8 The Green, STE R, Dover, DE 19901, United States. These Terms of Service (&quot;Terms&quot;) govern your access to and use of the Builder&apos;s Club platform, including our courses, community, and resources (collectively, the &quot;Service&quot;).
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              By joining Builder's Club, you agree to these Terms. If you do not agree, please do not use our Service.
+              By joining Builder&apos;s Club, you agree to these Terms. If you do not agree, please do not use our Service.
             </p>
           </div>
 
@@ -121,7 +122,7 @@ export default function TermsOfServicePage() {
               <li className="list-disc">Technical issues, outages, or data loss.</li>
               <li className="list-disc">Business losses, revenue loss, or other damages arising from use of our Service.</li>
             </ul>
-            <p className="text-gray-700 font-medium">Your use of Builder's Club is at your own risk.</p>
+            <p className="text-gray-700 font-medium">Your use of Builder&apos;s Club is at your own risk.</p>
           </section>
 
           {/* Section 10 */}

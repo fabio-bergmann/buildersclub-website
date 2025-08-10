@@ -991,10 +991,35 @@ export default function Home() {
             </div>
             
             <div className="text-left">
-              <h3 className="text-2xl font-bold text-black mb-2">Monthly Membership</h3>
+              <div className="flex items-center gap-3 mb-2">
+                <h3 className="text-2xl font-bold text-black">Monthly Membership</h3>
+                {/* Early Access Discount Banner */}
+                <div className="bg-gradient-to-r from-[#3478F2] to-[#2563EB] text-white px-3 py-1 rounded-lg text-sm font-bold">
+                  🎉 40% OFF - Early Access
+                </div>
+              </div>
+              
               <div className="mb-4 mt-6">
-                <span className="text-4xl font-bold text-black">$</span><span className="text-5xl font-bold text-black">47</span>
-                <span className="text-[#626262] text-xl ml-2">/month</span>
+                <div className="flex items-baseline gap-4">
+                  {/* Original Price - Single line through dollar amount only */}
+                  <div className="flex items-baseline">
+                    <div className="relative flex items-baseline">
+                      <span className="text-4xl font-bold text-gray-400">$</span>
+                      <span className="text-5xl font-bold text-gray-400">47</span>
+                      {/* Single strikethrough line over dollar amount only */}
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full h-[2px] bg-gray-400"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Discounted Price - Next to it */}
+                  <div className="flex items-baseline">
+                    <span className="text-4xl font-bold text-black">$</span>
+                    <span className="text-5xl font-bold text-black">28.20</span>
+                    <span className="text-[#626262] text-xl ml-2">/month</span>
+                  </div>
+                </div>
               </div>
               <p className="text-[#626262] mb-0">Join on a monthly basis</p>
             </div>
@@ -1042,7 +1067,10 @@ export default function Home() {
             </div>
             
             <div className="mt-auto">
-              <MainButton className="w-full">
+              <MainButton 
+                className="w-full" 
+                onClick={() => window.open('https://buy.stripe.com/8x28wR9dh0bX2uYd6M33W00?prefilled_promo_code=EARLYACCESS', '_blank')}
+              >
                 Join Now
               </MainButton>
             </div>
@@ -1063,16 +1091,41 @@ export default function Home() {
             </div>
             
             <div className="text-left">
-              <h3 className="text-2xl font-bold text-white mb-2">Yearly Membership</h3>
+              <div className="flex items-center gap-3 mb-2">
+                <h3 className="text-2xl font-bold text-white">Yearly Membership</h3>
+                {/* Early Access Discount Banner */}
+                <div className="bg-gradient-to-r from-[#3478F2] to-[#2563EB] text-white px-3 py-1 rounded-lg text-sm font-bold">
+                  🎉 40% OFF - Early Access
+                </div>
+              </div>
+              
               <div className="mb-4 mt-6">
-                <span className="text-4xl font-bold text-white">$</span><span className="text-5xl font-bold text-white">32</span>
-                <span className="text-gray-300 text-xl ml-2">/month</span>
+                <div className="flex items-baseline gap-4">
+                  {/* Original Price - Single line through dollar amount only */}
+                  <div className="flex items-baseline">
+                    <div className="relative flex items-baseline">
+                      <span className="text-4xl font-bold text-gray-500">$</span>
+                      <span className="text-5xl font-bold text-gray-500">32</span>
+                      {/* Single strikethrough line over dollar amount only */}
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full h-[2px] bg-gray-500"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Discounted Price - Next to it */}
+                  <div className="flex items-baseline">
+                    <span className="text-4xl font-bold text-white">$</span>
+                    <span className="text-5xl font-bold text-white">19.20</span>
+                    <span className="text-gray-300 text-xl ml-2">/month</span>
+                  </div>
+                </div>
               </div>
               <div className="mb-0">
                 <p className="text-gray-300">
-                  $384 billed annually 
+                  <span className="line-through text-gray-500">$384</span> $230.40 billed annually 
                   <span className="inline-block ml-2 bg-[#3478F2] text-white text-xs px-3 py-1 rounded font-bold">
-                    Save 32%
+                    Save 40%
                   </span>
                 </p>
               </div>
@@ -1121,7 +1174,10 @@ export default function Home() {
             </div>
             
             <div className="mt-auto">
-              <MainButton className="w-full">
+              <MainButton 
+                className="w-full" 
+                onClick={() => window.open('https://buy.stripe.com/14AdRbfBFbUF4D6c2I33W01?prefilled_promo_code=EARLYACCESS', '_blank')}
+              >
                 Join Now
               </MainButton>
             </div>
