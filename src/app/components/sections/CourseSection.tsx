@@ -112,7 +112,7 @@ export function CourseSection() {
               {/* Expandable Description */}
               <div 
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  expandedLesson === index ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
+                  expandedLesson === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
                 <div className="px-8 pb-6">

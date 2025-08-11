@@ -32,13 +32,26 @@ export default function Home() {
     if (pricingSection) {
       const elementRect = pricingSection.getBoundingClientRect();
       const absoluteElementTop = elementRect.top + window.pageYOffset;
-      const middle = absoluteElementTop - (window.innerHeight / 2) + (elementRect.height / 2);
-      const targetPosition = Math.max(0, middle);
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
+      
+      // Detect mobile screen size
+      const isMobile = window.innerWidth < 768;
+      
+      if (isMobile) {
+        // On mobile: scroll to show the pricing section title closer to top
+        const targetPosition = Math.max(0, absoluteElementTop - 50);
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      } else {
+        // On desktop: center the section in viewport (current behavior)
+        const middle = absoluteElementTop - (window.innerHeight / 2) + (elementRect.height / 2);
+        const targetPosition = Math.max(0, middle);
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
