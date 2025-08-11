@@ -29,6 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script defer data-domain="buildersclub.co" src="https://plausible.io/js/script.js"></script>
+      </head>
       <body
         className={`${figtree.variable} ${caveat.variable} font-sans antialiased`}
       >
