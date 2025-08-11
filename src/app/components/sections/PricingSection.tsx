@@ -21,7 +21,7 @@ export function PricingSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
         
         {/* Monthly Plan */}
-        <div className="group bg-white rounded-2xl shadow-xs border border-gray-200 p-8 pt-20 relative flex flex-col mt-24 overflow-hidden">
+        <div className="group bg-white rounded-2xl shadow-xs border border-gray-200 p-8 pt-20 relative flex flex-col mt-24">
           {/* Overlapping Image */}
           <div className="absolute -top-20 left-4 w-56 h-auto z-10 transition-transform duration-300 group-hover:rotate-[7.64deg]">
             <Image
@@ -115,7 +115,7 @@ export function PricingSection() {
         </div>
 
         {/* Yearly Plan */}
-        <div className="group bg-black rounded-2xl shadow-xs border border-gray-800 p-8 pt-20 relative flex flex-col mt-24 overflow-hidden">
+        <div className="group bg-black rounded-2xl shadow-xs border border-gray-800 p-8 pt-20 relative flex flex-col mt-24">
           {/* Overlapping Image */}
           <div className="absolute -top-20 left-4 w-56 h-auto z-10 transition-transform duration-300 group-hover:rotate-[7.64deg]">
             <Image

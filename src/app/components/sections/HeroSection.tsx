@@ -43,7 +43,7 @@ export function HeroSection({ onJoinTodayClick }: HeroSectionProps) {
       <div className="w-full max-w-lg mx-auto mb-20 flex justify-center">
         <DecorativeLines edgeAlign={true} verticalExtension={7} elementType="button">
           <MainButton onClick={onJoinTodayClick}>
-            Join Today
+            Join Now
           </MainButton>
         </DecorativeLines>
       </div>
