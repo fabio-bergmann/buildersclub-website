@@ -18,10 +18,33 @@
   }
 }
 
+html {
+  background-color: #F5F5F5; /* Gray background for overscroll at top */
+}
+
 body {
-  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-figtree), sans-serif;
   letter-spacing: -0.02em;
   overflow-x: hidden;
+  background-color: #F5F5F5; /* Main background */
+}
+
+/* Add bottom overscroll background */
+body::after {
+  content: '';
+  position: fixed;
+  top: 100vh;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background-color: #000000; /* Black background for bottom overscroll */
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Alternative approach - extend the page background */
+body {
+  background: linear-gradient(to bottom, #F5F5F5 0%, #F5F5F5 calc(100% - 200px), #000000 100%);
+  background-attachment: local;
 }

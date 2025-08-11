@@ -66,7 +66,7 @@ export function FAQSection() {
         {faqItems.map((item) => (
           <div key={item.id} className="py-4 border-b border-gray-300 last:border-b-0">
             <button 
-              className="w-full text-left text-lg font-semibold text-black hover:text-[#3478F2] focus-visible:ring-2 focus-visible:ring-[#3478F2] focus-visible:ring-offset-2 focus:outline-none py-2"
+              className="w-full text-left text-lg font-semibold text-black hover:text-[#3478F2] focus-visible:ring-2 focus-visible:ring-[#3478F2] focus-visible:ring-offset-2 focus:outline-none py-2 cursor-pointer"
               onClick={() => {
                 if (expandedFaq === item.id) {
                   // If clicking the same item, just close it
