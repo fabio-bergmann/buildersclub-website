@@ -49,11 +49,21 @@ export function CourseSection() {
                         </svg>
                         <span>Released</span>
                       </span>
-                    ) : (
-                      <span className="px-3 py-1 bg-yellow-50 text-[#F4B400] text-sm font-medium rounded-md w-fit">
-                        Coming Soon
-                      </span>
-                    )}
+                    ) : (() => {
+                      // Find the next two lessons after the last released lesson
+                      const releasedCount = lessons.filter(l => l.status === "released").length;
+                      const isThisWeek = index >= releasedCount && index < releasedCount + 2;
+                      
+                      return isThisWeek ? (
+                        <span className="px-3 py-1 bg-purple-50 text-[#6B2FC9] text-sm font-medium rounded-md w-fit">
+                          This Week
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 bg-yellow-50 text-[#F4B400] text-sm font-medium rounded-md w-fit">
+                          Coming Soon
+                        </span>
+                      );
+                    })()}
                   </div>
                   {/* Title and arrow */}
                   <div className="flex items-center justify-between">
@@ -90,11 +100,21 @@ export function CourseSection() {
                         </svg>
                         <span>Released</span>
                       </span>
-                    ) : (
-                      <span className="px-3 py-1 bg-yellow-50 text-[#F4B400] text-sm font-medium rounded-md">
-                        Coming Soon
-                      </span>
-                    )}
+                    ) : (() => {
+                      // Find the next two lessons after the last released lesson
+                      const releasedCount = lessons.filter(l => l.status === "released").length;
+                      const isThisWeek = index >= releasedCount && index < releasedCount + 2;
+                      
+                      return isThisWeek ? (
+                        <span className="px-3 py-1 bg-purple-50 text-[#6B2FC9] text-sm font-medium rounded-md">
+                          This Week
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 bg-yellow-50 text-[#F4B400] text-sm font-medium rounded-md">
+                          Coming Soon
+                        </span>
+                      );
+                    })()}
                     <svg 
                       className={`w-5 h-5 text-[#626262] transform transition-transform duration-300 ${
                         expandedLesson === index ? 'rotate-180' : ''
