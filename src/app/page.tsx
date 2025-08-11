@@ -968,10 +968,12 @@ export default function Home() {
         {/* New Pricing Main Headline */}
         <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Join Builder&apos;s Club</h2>
         
-        {/* New Pricing Subheadline */}
-        <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-          Choose your path to becoming an AI builder
-        </p>
+        {/* Early Access Discount Banner */}
+        <div className="flex justify-center mb-12">
+          <div className="bg-gradient-to-r from-[#3478F2] to-[#2563EB] text-white px-6 py-3 rounded-xl text-lg font-bold">
+            🚀 EARLY ACCESS -40%
+          </div>
+        </div>
         
         {/* Cards Container - Two Columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -988,11 +990,6 @@ export default function Home() {
                 className="w-full h-auto object-contain rounded-2xl"
                 priority
               />
-            </div>
-            
-            {/* Early Access Discount Banner - positioned on card outline */}
-            <div className="absolute -top-3 right-8 bg-gradient-to-r from-[#3478F2] to-[#2563EB] text-white px-3 py-1 rounded-lg text-sm font-bold z-20">
-              🚀 EARLY ACCESS -40%
             </div>
             
             <div className="text-left">
@@ -1087,11 +1084,6 @@ export default function Home() {
                 className="w-full h-auto object-contain rounded-2xl"
                 priority
               />
-            </div>
-            
-            {/* Early Access Discount Banner - positioned on card outline */}
-            <div className="absolute -top-3 right-8 bg-gradient-to-r from-[#3478F2] to-[#2563EB] text-white px-3 py-1 rounded-lg text-sm font-bold z-20">
-              🚀 EARLY ACCESS -40%
             </div>
             
             <div className="text-left">
