@@ -32,7 +32,7 @@ export function HeroSection({ onJoinTodayClick }: HeroSectionProps) {
 
       {/* Subheading with brackground lines */}
       <div className="w-full max-w-3xl mx-auto mb-14">
-        <DecorativeLines edgeAlign={true} verticalExtension={5} elementType="text" textLetterWidthRatio={0.7}>
+        <DecorativeLines edgeAlign={true} verticalExtension={5} elementType="text" textLetterWidthRatio={0.7} hideVerticalOnMobile={true}>
           <p className="text-xl md:text-2xl text-[#626262] text-center leading-relaxed font-medium">
             Learn, build, and grow in a community of Builder&apos;s
           </p>

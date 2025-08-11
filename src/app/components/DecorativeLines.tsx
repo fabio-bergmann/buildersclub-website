@@ -16,6 +16,7 @@ interface DecorativeLinesProps {
   textLetterInset?: number; // Fine-tune positioning for exact letter boundaries
   textLetterWidthRatio?: number; // Ratio of actual letters to container width (0.0-1.0)
   responsiveTextBoundaries?: boolean; // Enable responsive letter boundary detection
+  hideVerticalOnMobile?: boolean; // Hide vertical lines on mobile screens
 }
 
 export function DecorativeLines({
@@ -31,6 +32,7 @@ export function DecorativeLines({
   // textLetterInset = 2, // Unused parameter - Default 2px inset for letter boundaries
   textLetterWidthRatio = 0.7, // Default: letters are 70% of container width (tighter)
   // responsiveTextBoundaries = true, // Unused parameter - Default: enable responsive detection
+  hideVerticalOnMobile = false,
 }: DecorativeLinesProps) {
   const { ref, dimensions } = useElementDimensions();
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -194,8 +196,18 @@ export function DecorativeLines({
       leftVerticalPos = textCenterOffset + letterCenterOffset;
       rightVerticalPos = textCenterOffset + dimensions.width - letterCenterOffset;
       
-      horizontalWidth = dimensions.width + (extensionPx * 2);
-      horizontalLeft = textCenterOffset - extensionPx;
+      const desiredHorizontalWidth = dimensions.width + (extensionPx * 2);
+      const maxAvailableWidth = containerWidth - 4; // Keep 2px margin on each side
+      
+      if (desiredHorizontalWidth > maxAvailableWidth) {
+        // Apply overflow protection when needed
+        horizontalWidth = maxAvailableWidth;
+        horizontalLeft = Math.max(2, textCenterOffset - extensionPx);
+      } else {
+        // Use original calculation when there's no overflow
+        horizontalWidth = desiredHorizontalWidth;
+        horizontalLeft = textCenterOffset - extensionPx;
+      }
       
       console.log('Fixed text positioning:', {
         elementType,
@@ -209,9 +221,19 @@ export function DecorativeLines({
         rightVerticalPos
       });
     } else {
-      // For other elements: use calculated offset positions
-      horizontalWidth = dimensions.width + (extensionPx * 2);
-      horizontalLeft = (containerWidth - horizontalWidth) / 2;
+      // For other elements: use calculated offset positions with universal overflow protection
+      const desiredHorizontalWidth = dimensions.width + (extensionPx * 2);
+      const maxAvailableWidth = containerWidth - 4; // Keep 2px margin on each side
+      
+      if (desiredHorizontalWidth > maxAvailableWidth) {
+        // Apply overflow protection when needed
+        horizontalWidth = maxAvailableWidth;
+        horizontalLeft = Math.max(2, (containerWidth - horizontalWidth) / 2);
+      } else {
+        // Use original calculation when there's no overflow
+        horizontalWidth = desiredHorizontalWidth;
+        horizontalLeft = (containerWidth - horizontalWidth) / 2;
+      }
       leftVerticalPos = leftPos;
       rightVerticalPos = rightPos;
       
@@ -254,6 +276,9 @@ export function DecorativeLines({
   };
 
   const crossLines = calculateCrossLines();
+  
+  // Check if we should hide vertical lines on mobile
+  const shouldHideVertical = hideVerticalOnMobile && (typeof window !== 'undefined' && window.innerWidth < 768);
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
@@ -286,7 +311,7 @@ export function DecorativeLines({
       )}
       
       {/* Left vertical line - extends 30px above and below element */}
-      {crossLines.verticalLines && (
+      {crossLines.verticalLines && !shouldHideVertical && (
         <div 
           className="absolute z-0"
           style={{
@@ -300,7 +325,7 @@ export function DecorativeLines({
       )}
       
       {/* Right vertical line - extends 30px above and below element */}
-      {crossLines.verticalLines && (
+      {crossLines.verticalLines && !shouldHideVertical && (
         <div 
           className="absolute z-0"
           style={{
