@@ -23,4 +23,5 @@ body {
   color: var(--foreground);
   font-family: var(--font-figtree), sans-serif;
   letter-spacing: -0.02em;
+  overflow-x: hidden;
 }

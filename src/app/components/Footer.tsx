@@ -5,9 +5,8 @@ export function Footer() {
       <div className="w-full bg-black py-12">
         <div className="max-w-6xl mx-auto px-4">
           <h1 
-            className="font-bold leading-none tracking-tight"
+            className="font-bold leading-none tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-[80px]"
             style={{ 
-              fontSize: '80px',
               fontFamily: 'inherit',
               textRendering: 'optimizeLegibility',
               WebkitFontSmoothing: 'antialiased',
