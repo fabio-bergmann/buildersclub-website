@@ -1,0 +1,510 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { getUserById, posts, getTopUsers } from '@/data/users';
+import { Avatar } from '../Avatar';
+import { PostAuthor, LeaderboardEntry } from '../UserProfile';
+
+export function CommunitySection() {
+  const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
+  const [postText, setPostText] = useState('');
+  const [postTitle, setPostTitle] = useState('');
+  const [isWriteExpanded, setIsWriteExpanded] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [postCategory, setPostCategory] = useState('General');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [userPosts, setUserPosts] = useState<typeof posts>([]);
+  const [postEngagement, setPostEngagement] = useState<Record<string, { likes: number; hasComment: boolean; commentTimestamp?: number }>>({});
+  const [userPoints, setUserPoints] = useState(0);
+  const [userRank, setUserRank] = useState<number | null>(null);
+
+  const youUser = getUserById('you')!;
+  const topUsers = getTopUsers(9);
+
+  const categoryOptions = [
+    {
+      value: 'General',
+      label: 'General',
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M3 7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V13.5C21 14.8978 21 15.5967 20.7716 16.1481C20.4672 16.8831 19.8831 17.4672 19.1481 17.7716C18.5967 18 17.8978 18 16.5 18C16.0114 18 15.7671 18 15.5405 18.0535C15.2383 18.1248 14.9569 18.2656 14.7185 18.4645C14.5397 18.6137 14.3931 18.8091 14.1 19.2L12.64 21.1467C12.4229 21.4362 12.3143 21.5809 12.1812 21.6327C12.0647 21.678 11.9353 21.678 11.8188 21.6327C11.6857 21.5809 11.5771 21.4362 11.36 21.1467L9.9 19.2C9.60685 18.8091 9.46028 18.6137 9.2815 18.4645C9.04312 18.2656 8.76169 18.1248 8.45951 18.0535C8.23287 18 7.98858 18 7.5 18C6.10218 18 5.40326 18 4.85195 17.7716C4.11687 17.4672 3.53284 16.8831 3.22836 16.1481C3 15.5967 3 14.8978 3 13.5V7.8Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    },
+    {
+      value: 'Introductions',
+      label: 'Introductions',
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M7.5 4.5C7.5 3.11929 8.61929 2 10 2C11.3807 2 12.5 3.11929 12.5 4.5V6H13.5C14.8978 6 15.5967 6 16.1481 6.22836C16.8831 6.53284 17.4672 7.11687 17.7716 7.85195C18 8.40326 18 9.10218 18 10.5H19.5C20.8807 10.5 22 11.6193 22 13C22 14.3807 20.8807 15.5 19.5 15.5H18V17.2C18 18.8802 18 19.7202 17.673 20.362C17.3854 20.9265 16.9265 21.3854 16.362 21.673C15.7202 22 14.8802 22 13.2 22H12.5V20.25C12.5 19.0074 11.4926 18 10.25 18C9.00736 18 8 19.0074 8 20.25V22H6.8C5.11984 22 4.27976 22 3.63803 21.673C3.07354 21.3854 2.6146 20.9265 2.32698 20.362C2 19.7202 2 18.8802 2 17.2V15.5H3.5C4.88071 15.5 6 14.3807 6 13C6 11.6193 4.88071 10.5 3.5 10.5H2C2 9.10218 2 8.40326 2.22836 7.85195C2.53284 7.11687 3.11687 6.53284 3.85195 6.22836C4.40326 6 5.10218 6 6.5 6H7.5V4.5Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    },
+    {
+      value: 'Support',
+      label: 'Support',
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M7 15L10 12L7 9M13 15H17M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    },
+    {
+      value: 'Announcements',
+      label: 'Announcements',
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M18.5 16C20.433 16 22 13.0899 22 9.5C22 5.91015 20.433 3 18.5 3M18.5 16C16.567 16 15 13.0899 15 9.5C15 5.91015 16.567 3 18.5 3M18.5 16L5.44354 13.6261C4.51605 13.4575 4.05231 13.3731 3.67733 13.189C2.91447 12.8142 2.34636 12.1335 2.11414 11.3159C2 10.914 2 10.4427 2 9.5C2 8.5573 2 8.08595 2.11414 7.68407C2.34636 6.86649 2.91447 6.18577 3.67733 5.81105C4.05231 5.62685 4.51605 5.54254 5.44354 5.3739L18.5 3M5 14L5.39386 19.514C5.43126 20.0376 5.44996 20.2995 5.56387 20.4979C5.66417 20.6726 5.81489 20.8129 5.99629 20.9005C6.20232 21 6.46481 21 6.98979 21H8.7722C9.37234 21 9.67242 21 9.89451 20.8803C10.0897 20.7751 10.2443 20.6081 10.3342 20.4055C10.4365 20.1749 10.4135 19.8757 10.3675 19.2773L10 14.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    }
+  ];
+
+  const selectedCategory = categoryOptions.find(cat => cat.value === postCategory) || categoryOptions[0];
+
+  const getCategoryIcon = (category: string) => {
+    const option = categoryOptions.find(opt => opt.value === category);
+    return option ? option.icon : categoryOptions[0].icon;
+  };
+
+  const formatTimeAgo = (timestamp: number) => {
+    const now = Date.now();
+    const diffInMinutes = Math.floor((now - timestamp) / (1000 * 60));
+    
+    if (diffInMinutes === 0) return 'Just now';
+    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+    
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours}h ago`;
+    
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays}d ago`;
+  };
+
+  const handleLike = (postId: string) => {
+    console.log('Like clicked for post:', postId);
+    setLikedPosts(prev => ({
+      ...prev,
+      [postId]: !prev[postId]
+    }));
+  };
+
+  const handleWriteClick = () => {
+    setIsWriteExpanded(true);
+  };
+
+  const handleTextareaResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPostText(e.target.value);
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
+  };
+
+  const handleCategoryClick = (category: string) => {
+    setActiveCategory(category);
+  };
+
+  const handlePost = () => {
+    if (!postTitle.trim() || !postText.trim()) return;
+    
+    const newPostId = `user-post-${Date.now()}`;
+    const newPost: typeof posts[0] & { timestamp?: number } = {
+      id: newPostId,
+      userId: 'you',
+      title: postTitle,
+      content: postText,
+      timeAgo: 'Just now',
+      timestamp: Date.now(),
+      category: postCategory,
+      categoryIcon: '',
+      likes: 0,
+      comments: 0,
+      lastCommentTime: '',
+      commenters: []
+    };
+    
+    setUserPosts(prev => [newPost, ...prev].slice(0, 3));
+    
+    setPostEngagement(prev => ({
+      ...prev,
+      [newPostId]: { likes: 0, hasComment: false }
+    }));
+    
+    startEngagementSimulation(newPostId);
+    
+    const newPoints = userPoints === 0 ? 2000 : userPoints + 100;
+    setUserPoints(newPoints);
+    setUserRank(1);
+    
+    setPostTitle('');
+    setPostText('');
+    setPostCategory('General');
+    setIsWriteExpanded(false);
+  };
+
+  const startEngagementSimulation = (postId: string) => {
+    setTimeout(() => {
+      setPostEngagement(prev => ({
+        ...prev,
+        [postId]: { ...prev[postId], likes: 1 }
+      }));
+    }, 5000);
+
+    setTimeout(() => {
+      const likeInterval = setInterval(() => {
+        setPostEngagement(prev => {
+          const current = prev[postId];
+          if (current && current.likes < 10) {
+            return {
+              ...prev,
+              [postId]: { ...current, likes: current.likes + 1 }
+            };
+          }
+          return prev;
+        });
+      }, 8000);
+
+      setTimeout(() => {
+        clearInterval(likeInterval);
+      }, 80000);
+    }, 10000);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isDropdownOpen) {
+        const target = event.target as Element;
+        if (!target.closest('[data-dropdown-container]')) {
+          setIsDropdownOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isDropdownOpen]);
+
+  return (
+    <div className="w-full max-w-6xl mt-44">
+      {/* Community Main Headline */}
+      <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Community</h2>
+      
+      {/* Community Subheadline */}
+      <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
+        Connect with fellow builders and share your journey
+      </p>
+      
+      {/* Community Interface Mockup */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Posts Section */}
+        <div className="lg:col-span-8 space-y-6">
+          {/* Write Something Section */}
+          <div className="transition-all duration-500 ease-in-out bg-white rounded-2xl shadow-xs border border-gray-200" data-write-container>
+            <div className="p-4">
+              {/* Avatar and Main Input Row */}
+              <div className="flex items-center space-x-4">
+                <Avatar user={youUser} size="lg" />
+                {!isWriteExpanded ? (
+                  <div 
+                    onClick={handleWriteClick}
+                    className="flex-1 text-[#999999] text-lg cursor-pointer"
+                  >
+                    Write something
+                  </div>
+                ) : (
+                  <input
+                    type="text"
+                    value={postTitle}
+                    onChange={(e) => setPostTitle(e.target.value)}
+                    placeholder="Title"
+                    autoFocus
+                    className="flex-1 text-black font-semibold text-xl bg-transparent border-none focus:outline-none placeholder-[#999999]"
+                  />
+                )}
+              </div>
+              
+              {/* Description Input - Only show when expanded */}
+              <div className={`${isDropdownOpen || isWriteExpanded ? 'overflow-visible' : 'overflow-hidden'} transition-all duration-500 ease-in-out ${
+                isWriteExpanded ? 'max-h-96' : 'max-h-0'
+              }`}>
+                <div className={`flex items-start mt-3 transition-opacity duration-0 ${
+                  isWriteExpanded ? 'opacity-100' : 'opacity-0'
+                }`}>
+                  <div className="w-12 mr-4"></div>
+                  <div className="flex-1 space-y-3">
+                    <textarea
+                      value={postText}
+                      onChange={handleTextareaResize}
+                      placeholder="Write something"
+                      rows={3}
+                      className="w-full text-[#626262] text-lg bg-transparent border-none focus:outline-none placeholder-[#BBBBBB] cursor-text resize-none overflow-hidden"
+                      style={{ minHeight: '3rem' }}
+                    />
+                    
+                    {/* Category Selector and Buttons Row */}
+                    <div className={`flex justify-between items-center transition-all duration-300 delay-200 ${
+                      isWriteExpanded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                    }`}>
+                      {/* Category Selector */}
+                      <div className="relative z-50" data-dropdown-container>
+                        <button
+                          onClick={() => {
+                            console.log('Dropdown clicked, current state:', isDropdownOpen);
+                            setIsDropdownOpen(!isDropdownOpen);
+                          }}
+                          className="flex items-center space-x-2 px-3 py-2 border border-gray-200 rounded-lg text-sm text-[#626262] bg-white hover:bg-gray-50 focus:outline-none"
+                        >
+                          {selectedCategory.icon}
+                          <span>{selectedCategory.label}</span>
+                          <svg
+                            className={`w-4 h-4 transition-transform duration-200 ${
+                              isDropdownOpen ? 'rotate-180' : ''
+                            }`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+
+                        <div 
+                          className={`absolute left-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-xl transform transition-all duration-200 ease-out ${
+                            isDropdownOpen ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto z-[99999]' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none z-[-1]'
+                          }`}
+                          style={{ 
+                            backgroundColor: 'white',
+                            border: '1px solid #e5e7eb',
+                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                            transformOrigin: 'top',
+                            zIndex: isDropdownOpen ? 99999 : -1
+                          }}
+                        >
+                          {categoryOptions.map((option) => (
+                            <div
+                              key={option.value}
+                              onClick={() => {
+                                console.log('==== CATEGORY CLICK ====');
+                                console.log('Clicked option:', option.value);
+                                console.log('Current postCategory before:', postCategory);
+                                setPostCategory(option.value);
+                                setIsDropdownOpen(false);
+                                console.log('Should update to:', option.value);
+                                console.log('========================');
+                              }}
+                              className="flex items-center space-x-2 w-full px-3 py-2 text-sm text-[#626262] hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg cursor-pointer"
+                              role="button"
+                              tabIndex={0}
+                            >
+                              {option.icon}
+                              <span>{option.label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Cancel and Post Buttons */}
+                      <div className="flex space-x-3">
+                        <button 
+                          onClick={() => {
+                            setPostTitle('');
+                            setPostText('');
+                            setIsWriteExpanded(false);
+                          }}
+                          className="px-6 py-2 text-[#626262] text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                        >
+                          Cancel
+                        </button>
+                        <button 
+                          onClick={handlePost}
+                          className="px-6 py-2 bg-[#3478F2] text-white text-sm font-medium rounded-lg hover:bg-[#2563EB] transition-colors duration-200"
+                        >
+                          Post
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation Tabs - Hidden on mobile */}
+          <div className="hidden lg:flex items-center space-x-3 w-full">
+            <button 
+              onClick={() => handleCategoryClick('All')}
+              className={`px-6 py-3 border rounded-xl text-sm font-medium flex-1 text-center transition-colors duration-200 cursor-pointer ${
+                activeCategory === 'All' 
+                  ? 'bg-[#3478F2] text-white border-[#3478F2]' 
+                  : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+              }`}
+            >
+              All
+            </button>
+            <button 
+              onClick={() => handleCategoryClick('General')}
+              className={`px-6 py-3 border rounded-xl text-sm font-medium flex items-center justify-center space-x-2 flex-1 transition-colors duration-200 cursor-pointer ${
+                activeCategory === 'General' 
+                  ? 'bg-[#3478F2] text-white border-[#3478F2]' 
+                  : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+              }`}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M3 7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V13.5C21 14.8978 21 15.5967 20.7716 16.1481C20.4672 16.8831 19.8831 17.4672 19.1481 17.7716C18.5967 18 17.8978 18 16.5 18C16.0114 18 15.7671 18 15.5405 18.0535C15.2383 18.1248 14.9569 18.2656 14.7185 18.4645C14.5397 18.6137 14.3931 18.8091 14.1 19.2L12.64 21.1467C12.4229 21.4362 12.3143 21.5809 12.1812 21.6327C12.0647 21.678 11.9353 21.678 11.8188 21.6327C11.6857 21.5809 11.5771 21.4362 11.36 21.1467L9.9 19.2C9.60685 18.8091 9.46028 18.6137 9.2815 18.4645C9.04312 18.2656 8.76169 18.1248 8.45951 18.0535C8.23287 18 7.98858 18 7.5 18C6.10218 18 5.40326 18 4.85195 17.7716C4.11687 17.4672 3.53284 16.8831 3.22836 16.1481C3 15.5967 3 14.8978 3 13.5V7.8Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span>General</span>
+            </button>
+            <button 
+              onClick={() => handleCategoryClick('Introductions')}
+              className={`px-6 py-3 border rounded-xl text-sm font-medium flex items-center justify-center space-x-2 flex-1 transition-colors duration-200 cursor-pointer ${
+                activeCategory === 'Introductions' 
+                  ? 'bg-[#3478F2] text-white border-[#3478F2]' 
+                  : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+              }`}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M7.5 4.5C7.5 3.11929 8.61929 2 10 2C11.3807 2 12.5 3.11929 12.5 4.5V6H13.5C14.8978 6 15.5967 6 16.1481 6.22836C16.8831 6.53284 17.4672 7.11687 17.7716 7.85195C18 8.40326 18 9.10218 18 10.5H19.5C20.8807 10.5 22 11.6193 22 13C22 14.3807 20.8807 15.5 19.5 15.5H18V17.2C18 18.8802 18 19.7202 17.673 20.362C17.3854 20.9265 16.9265 21.3854 16.362 21.673C15.7202 22 14.8802 22 13.2 22H12.5V20.25C12.5 19.0074 11.4926 18 10.25 18C9.00736 18 8 19.0074 8 20.25V22H6.8C5.11984 22 4.27976 22 3.63803 21.673C3.07354 21.3854 2.6146 20.9265 2.32698 20.362C2 19.7202 2 18.8802 2 17.2V15.5H3.5C4.88071 15.5 6 14.3807 6 13C6 11.6193 4.88071 10.5 3.5 10.5H2C2 9.10218 2 8.40326 2.22836 7.85195C2.53284 7.11687 3.11687 6.53284 3.85195 6.22836C4.40326 6 5.10218 6 6.5 6H7.5V4.5Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span>Introductions</span>
+            </button>
+            <button 
+              onClick={() => handleCategoryClick('Support')}
+              className={`px-6 py-3 border rounded-xl text-sm font-medium flex items-center justify-center space-x-2 flex-1 transition-colors duration-200 cursor-pointer ${
+                activeCategory === 'Support' 
+                  ? 'bg-[#3478F2] text-white border-[#3478F2]' 
+                  : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+              }`}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M7 15L10 12L7 9M13 15H17M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span>Support</span>
+            </button>
+            <button 
+              onClick={() => handleCategoryClick('Announcements')}
+              className={`px-6 py-3 border rounded-xl text-sm font-medium flex items-center justify-center space-x-2 flex-1 transition-colors duration-200 cursor-pointer ${
+                activeCategory === 'Announcements' 
+                  ? 'bg-[#3478F2] text-white border-[#3478F2]' 
+                  : 'bg-white border-gray-200 text-[#626262] hover:bg-gray-50'
+              }`}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M18.5 16C20.433 16 22 13.0899 22 9.5C22 5.91015 20.433 3 18.5 3M18.5 16C16.567 16 15 13.0899 15 9.5C15 5.91015 16.567 3 18.5 3M18.5 16L5.44354 13.6261C4.51605 13.4575 4.05231 13.3731 3.67733 13.189C2.91447 12.8142 2.34636 12.1335 2.11414 11.3159C2 10.914 2 10.4427 2 9.5C2 8.5573 2 8.08595 2.11414 7.68407C2.34636 6.86649 2.91447 6.18577 3.67733 5.81105C4.05231 5.62685 4.51605 5.54254 5.44354 5.3739L18.5 3M5 14L5.39386 19.514C5.43126 20.0376 5.44996 20.2995 5.56387 20.4979C5.66417 20.6726 5.81489 20.8129 5.99629 20.9005C6.20232 21 6.46481 21 6.98979 21H8.7722C9.37234 21 9.67242 21 9.89451 20.8803C10.0897 20.7751 10.2443 20.6081 10.3342 20.4055C10.4365 20.1749 10.4135 19.8757 10.3675 19.2773L10 14.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span>Announcements</span>
+            </button>
+          </div>
+
+          {/* Dynamic Posts */}
+          {[...userPosts, ...posts].slice(0, 3).map((post) => {
+            const user = getUserById(post.userId);
+            if (!user) {
+              console.warn(`User not found for post ${post.id} with userId: ${post.userId}`);
+              return null;
+            }
+            
+            const isLiked = likedPosts[post.id] || false;
+            const engagement = postEngagement[post.id];
+            const baseLikes = engagement ? engagement.likes : post.likes;
+            const currentLikes = baseLikes + (isLiked ? 1 : 0);
+            
+            return (
+              <div key={post.id} className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
+                <PostAuthor 
+                  user={user}
+                  timeAgo={(() => {
+                    const postWithTimestamp = post as typeof post & { timestamp?: number };
+                    return postWithTimestamp.timestamp ? formatTimeAgo(postWithTimestamp.timestamp) : post.timeAgo;
+                  })()}
+                  category={post.category}
+                  categoryIcon={getCategoryIcon(post.category)}
+                />
+                <div className="ml-15">
+                  <h3 className="font-bold text-black text-xl mb-2">{post.title}</h3>
+                  <p className="text-[#626262] mb-3">{post.content}</p>
+                  <div className="flex items-center space-x-6 text-[#626262] text-sm">
+                    <button 
+                      onClick={() => handleLike(post.id)}
+                      className={`flex items-center space-x-1 hover:opacity-70 transition-all duration-200 cursor-pointer ${isLiked ? 'text-[#3478F2]' : 'text-[#626262]'}`}
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 22V11M2 13V20C2 21.1046 2.89543 22 4 22H17.4262C18.907 22 20.1662 20.9197 20.3914 19.4562L21.4683 12.4562C21.7479 10.6389 20.3418 9 18.5032 9H15C14.4477 9 14 8.55228 14 8V4.46584C14 3.10399 12.896 2 11.5342 2C11.2093 2 10.915 2.1913 10.7831 2.48812L7.26394 10.4061C7.10344 10.7673 6.74532 11 6.35013 11H4C2.89543 11 2 11.8954 2 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span className="min-w-[8px] text-center">{currentLikes}</span>
+                    </button>
+                    <span className="flex items-center space-x-1">
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V13.2C21 14.8802 21 15.7202 20.673 16.362C20.3854 16.9265 19.9265 17.3854 19.362 17.673C18.7202 18 17.8802 18 16.2 18H13.6837C13.0597 18 12.7477 18 12.4492 18.0613C12.1844 18.1156 11.9282 18.2055 11.6875 18.3285C11.4162 18.4671 11.1725 18.662 10.6852 19.0518L8.29976 20.9602C7.88367 21.2931 7.67563 21.4595 7.50054 21.4597C7.34827 21.4599 7.20422 21.3906 7.10923 21.2716C7 21.1348 7 20.8684 7 20.3355V18C6.07003 18 5.60504 18 5.22354 17.8978C4.18827 17.6204 3.37962 16.8117 3.10222 15.7765C3 15.395 3 14.93 3 14V7.8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span>{post.comments}</span>
+                    </span>
+                    {post.commenters && post.commenters.length > 0 && post.comments > 0 && (
+                      <div className="flex items-center space-x-2">
+                        <div className={`flex ${post.commenters.length > 1 ? '-space-x-1' : ''}`}>
+                          {post.commenters.slice(0, 4).map((commenterId) => {
+                            const commenter = getUserById(commenterId);
+                            console.log(`Post ${post.id} - Looking for commenter: ${commenterId}, found:`, commenter);
+                            return commenter ? (
+                              <Avatar
+                                key={commenter.id}
+                                user={commenter}
+                                size="sm"
+                                showBorder={post.commenters!.length > 1}
+                              />
+                            ) : null;
+                          })}
+                        </div>
+                        <span>Last comment {post.lastCommentTime}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+        </div>
+
+        {/* Leaderboard - Right column on desktop, below posts on mobile */}
+        <div className="lg:col-span-4">
+          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
+            {/* Leaderboard */}
+            <div>
+              <div className="flex items-center mb-4">
+                <div className="w-6 flex justify-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#626262]">
+                    <path d="M12 15C8.68629 15 6 12.3137 6 9V3.44444C6 3.0306 6 2.82367 6.06031 2.65798C6.16141 2.38021 6.38021 2.16141 6.65798 2.06031C6.82367 2 7.0306 2 7.44444 2H16.5556C16.9694 2 17.1763 2 17.342 2.06031C17.6198 2.16141 17.8386 2.38021 17.9397 2.65798C18 2.82367 18 3.0306 18 3.44444V9C18 12.3137 15.3137 15 12 15ZM12 15V18M18 4H20.5C20.9659 4 21.1989 4 21.3827 4.07612C21.6277 4.17761 21.8224 4.37229 21.9239 4.61732C22 4.80109 22 5.03406 22 5.5V6C22 6.92997 22 7.39496 21.8978 7.77646C21.6204 8.81173 20.8117 9.62038 19.7765 9.89778C19.395 10 18.93 10 18 10M6 4H3.5C3.03406 4 2.80109 4 2.61732 4.07612C2.37229 4.17761 2.17761 4.37229 2.07612 4.61732C2 4.80109 2 5.03406 2 5.5V6C2 6.92997 2 7.39496 2.10222 7.77646C2.37962 8.81173 3.18827 9.62038 4.22354 9.89778C4.60504 10 5.07003 10 6 10M7.44444 22H16.5556C16.801 22 17 21.801 17 21.5556C17 19.5919 15.4081 18 13.4444 18H10.5556C8.59188 18 7 19.5919 7 21.5556C7 21.801 7.19898 22 7.44444 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="font-bold text-black text-lg">Leaderboard</h3>
+                </div>
+              </div>
+              <div className="space-y-3">
+                {userRank && userPoints > 0 && (
+                  <LeaderboardEntry 
+                    key="you" 
+                    user={{
+                      ...youUser,
+                      points: userPoints,
+                      rank: userRank
+                    }} 
+                  />
+                )}
+                {topUsers.filter(user => user.id !== 'you').slice(0, userRank && userPoints > 0 ? 9 : 10).map((user) => (
+                  <LeaderboardEntry 
+                    key={user.id} 
+                    user={{
+                      ...user,
+                      rank: userRank && userPoints > 0 ? (user.rank || 0) + 1 : user.rank
+                    }} 
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
