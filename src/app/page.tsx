@@ -365,7 +365,7 @@ export default function Home() {
             playsInline
           >
             {/* Video source will be replaced when actual video is provided */}
-            <source src="/video/placeholder.mp4" type="video/mp4" />
+            <source src="/video/video.mp4" type="video/mp4" />
             {/* Fallback content for browsers that don't support video */}
             <div className="w-full h-64 bg-gradient-to-r from-gray-300 to-gray-400 flex items-center justify-center">
               <p className="text-gray-600 text-lg font-medium">Video placeholder - will be replaced with actual video</p>
@@ -373,7 +373,7 @@ export default function Home() {
           </video>
           
           {/* Loading placeholder overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 to-gray-400 flex items-center justify-center">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 to-gray-400 flex items-center justify-center hidden">
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center">
                 <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1012,7 +1012,7 @@ export default function Home() {
                   {/* Discounted Price - Next to it */}
                   <div className="flex items-baseline">
                     <span className="text-4xl font-bold text-black">$</span>
-                    <span className="text-5xl font-bold text-black">28</span>
+                    <span className="text-5xl font-bold text-black">27</span>
                     <span className="text-[#626262] text-xl ml-2">/month</span>
                   </div>
                 </div>
@@ -1065,7 +1065,7 @@ export default function Home() {
             <div className="mt-auto">
               <MainButton 
                 className="w-full" 
-                onClick={() => window.open('https://buy.stripe.com/8x28wR9dh0bX2uYd6M33W00?prefilled_promo_code=EARLYACCESS', '_blank')}
+                onClick={() => window.open('https://buy.stripe.com/8x28wR9dh0bX2uYd6M33W00', '_blank')}
               >
                 Join Now
               </MainButton>
@@ -1113,7 +1113,7 @@ export default function Home() {
               </div>
               <div className="mb-0">
                 <p className="text-gray-300">
-                  <span className="line-through text-gray-500">$384</span> $230 billed annually
+                  <span className="line-through text-gray-500">$384</span> $228 billed annually
                 </p>
               </div>
             </div>
@@ -1163,7 +1163,7 @@ export default function Home() {
             <div className="mt-auto">
               <MainButton 
                 className="w-full" 
-                onClick={() => window.open('https://buy.stripe.com/14AdRbfBFbUF4D6c2I33W01?prefilled_promo_code=EARLYACCESS', '_blank')}
+                onClick={() => window.open('https://buy.stripe.com/14AdRbfBFbUF4D6c2I33W01', '_blank')}
               >
                 Join Now
               </MainButton>
