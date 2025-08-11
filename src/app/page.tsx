@@ -365,7 +365,7 @@ export default function Home() {
             playsInline
           >
             {/* Video source will be replaced when actual video is provided */}
-            <source src="/video/video.mp4" type="video/mp4" />
+            <source src="https://c1mxgmqfaczbm0k0.public.blob.vercel-storage.com/website-video" type="video/mp4" />
             {/* Fallback content for browsers that don't support video */}
             <div className="w-full h-64 bg-gradient-to-r from-gray-300 to-gray-400 flex items-center justify-center">
               <p className="text-gray-600 text-lg font-medium">Video placeholder - will be replaced with actual video</p>
