@@ -103,7 +103,7 @@ export const users: User[] = [
     id: 'you',
     name: 'You',
     initials: 'YOU',
-    avatarGradient: 'from-blue-400 to-blue-600',
+    avatarGradient: 'from-[#3D3D3D] to-[#2B2B2B]',
     avatarImage: '/avatars/you.webp',
   },
 ];
