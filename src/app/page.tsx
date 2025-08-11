@@ -15,7 +15,7 @@ export default function Home() {
   const [postTitle, setPostTitle] = useState('');
   const [isWriteExpanded, setIsWriteExpanded] = useState(false);
   const [expandedLesson, setExpandedLesson] = useState<number | null>(null);
-  const [expandedFaq, setExpandedFaq] = useState<string | null>("1"); // Default to first FAQ item open
+  const [expandedFaq, setExpandedFaq] = useState<string | null>(null); // Default to all FAQ items collapsed
   const [closingFaq, setClosingFaq] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
   const [postCategory, setPostCategory] = useState('General');
@@ -349,7 +349,7 @@ export default function Home() {
       <div className="w-full max-w-lg mx-auto mb-20 flex justify-center">
         <DecorativeLines edgeAlign={true} verticalExtension={7} elementType="button">
           <MainButton onClick={scrollToPricing}>
-            Join Now
+            Join Today
           </MainButton>
         </DecorativeLines>
       </div>
@@ -968,12 +968,6 @@ export default function Home() {
         {/* New Pricing Main Headline */}
         <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Join Builder&apos;s Club</h2>
         
-        {/* Early Access Discount Banner */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-gradient-to-r from-[#3478F2] to-[#2563EB] text-white px-6 py-3 rounded-xl text-lg font-bold">
-            🚀 EARLY ACCESS -40%
-          </div>
-        </div>
         
         {/* Cards Container - Two Columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -994,6 +988,11 @@ export default function Home() {
             
             <div className="text-left">
               <h3 className="text-2xl font-bold text-black mb-2">Monthly Membership</h3>
+              <div className="mb-4">
+                <div className="bg-gradient-to-b from-[#3478F2] to-[#2663EB] text-white px-4 py-2 rounded-lg text-sm font-bold inline-block">
+                  🚀 EARLY ACCESS -40%
+                </div>
+              </div>
               
               <div className="mb-4 mt-6">
                 <div className="flex items-baseline gap-4">
@@ -1067,7 +1066,7 @@ export default function Home() {
                 className="w-full" 
                 onClick={() => window.open('https://buy.stripe.com/8x28wR9dh0bX2uYd6M33W00', '_blank')}
               >
-                Join Now
+                Join Today
               </MainButton>
             </div>
           </div>
@@ -1088,6 +1087,11 @@ export default function Home() {
             
             <div className="text-left">
               <h3 className="text-2xl font-bold text-white mb-2">Yearly Membership</h3>
+              <div className="mb-4">
+                <div className="bg-gradient-to-b from-[#3478F2] to-[#2663EB] text-white px-4 py-2 rounded-lg text-sm font-bold inline-block">
+                  🚀 EARLY ACCESS -40%
+                </div>
+              </div>
               
               <div className="mb-4 mt-6">
                 <div className="flex items-baseline gap-4">
@@ -1165,7 +1169,7 @@ export default function Home() {
                 className="w-full" 
                 onClick={() => window.open('https://buy.stripe.com/14AdRbfBFbUF4D6c2I33W01', '_blank')}
               >
-                Join Now
+                Join Today
               </MainButton>
             </div>
           </div>
