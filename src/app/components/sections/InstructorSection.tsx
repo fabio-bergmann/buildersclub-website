@@ -1,39 +1,42 @@
 import Image from 'next/image';
+import { AnimatedVideo } from '../AnimatedVideo';
 
 export function InstructorSection() {
   return (
     <>
       {/* Background Video */}
-      <div className="w-full max-w-4xl mb-8">
-        <div className="relative w-full rounded-xl overflow-hidden shadow-2xl bg-gray-200">
-          <video 
-            className="w-full h-auto aspect-video object-cover"
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-          >
-            {/* Video source will be replaced when actual video is provided */}
-            <source src="https://c1mxgmqfaczbm0k0.public.blob.vercel-storage.com/website-video" type="video/mp4" />
-            {/* Fallback content for browsers that don't support video */}
-            <div className="w-full h-64 bg-gradient-to-r from-gray-300 to-gray-400 flex items-center justify-center">
-              <p className="text-gray-600 text-lg font-medium">Video placeholder - will be replaced with actual video</p>
-            </div>
-          </video>
-          
-          {/* Loading placeholder overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 to-gray-400 flex items-center justify-center hidden">
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
-                </svg>
+      <div className="w-full max-w-4xl mb-8 mx-auto">
+        <AnimatedVideo>
+          <div className="relative w-full rounded-xl overflow-hidden shadow-2xl bg-gray-200">
+            <video 
+              className="w-full h-auto aspect-video object-cover"
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+            >
+              {/* Video source will be replaced when actual video is provided */}
+              <source src="https://c1mxgmqfaczbm0k0.public.blob.vercel-storage.com/website-video" type="video/mp4" />
+              {/* Fallback content for browsers that don't support video */}
+              <div className="w-full h-64 bg-gradient-to-r from-gray-300 to-gray-400 flex items-center justify-center">
+                <p className="text-gray-600 text-lg font-medium">Video placeholder - will be replaced with actual video</p>
               </div>
-              <p className="text-gray-600 text-lg font-medium">Video Loading...</p>
-              <p className="text-gray-500 text-sm mt-2">Background video will loop here</p>
+            </video>
+            
+            {/* Loading placeholder overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-300 to-gray-400 flex items-center justify-center hidden">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
+                  </svg>
+                </div>
+                <p className="text-gray-600 text-lg font-medium">Video Loading...</p>
+                <p className="text-gray-500 text-sm mt-2">Background video will loop here</p>
+              </div>
             </div>
           </div>
-        </div>
+        </AnimatedVideo>
       </div>
 
       {/* Instructor Section */}
