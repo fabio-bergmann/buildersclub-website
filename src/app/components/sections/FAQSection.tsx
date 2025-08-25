@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { WordsPullUp } from '../WordsPullUp';
+import { AnimatedFAQ } from '../AnimatedFAQ';
 
 export function FAQSection() {
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
@@ -68,8 +69,9 @@ export function FAQSection() {
       
       {/* FAQ Items */}
       <div className="w-full">
-        {faqItems.map((item) => (
-          <div key={item.id} className="py-4 border-b border-gray-300 last:border-b-0">
+        {faqItems.map((item, index) => (
+          <AnimatedFAQ key={item.id} index={index}>
+            <div className="py-4 border-b border-gray-300 last:border-b-0">
             <button 
               className="w-full text-left text-lg font-semibold text-black hover:text-[#3478F2] focus-visible:ring-2 focus-visible:ring-[#3478F2] focus-visible:ring-offset-2 focus:outline-none py-2 cursor-pointer"
               onClick={() => {
@@ -118,7 +120,8 @@ export function FAQSection() {
                 <div dangerouslySetInnerHTML={{ __html: item.content }} />
               </div>
             </div>
-          </div>
+            </div>
+          </AnimatedFAQ>
         ))}
       </div>
     </div>

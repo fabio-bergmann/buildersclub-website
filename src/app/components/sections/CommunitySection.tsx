@@ -5,6 +5,8 @@ import { getUserById, posts, getTopUsers } from '@/data/users';
 import { Avatar } from '../Avatar';
 import { PostAuthor, LeaderboardEntry } from '../UserProfile';
 import { WordsPullUp } from '../WordsPullUp';
+import { AnimatedCard } from '../AnimatedCard';
+import { AnimatedSection } from '../AnimatedSection';
 
 export function CommunitySection() {
   const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
@@ -199,11 +201,11 @@ export function CommunitySection() {
       />
       
       {/* Community Interface Mockup */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <AnimatedSection className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Posts Section */}
         <div className="lg:col-span-8 space-y-6">
           {/* Write Something Section */}
-          <div className="transition-all duration-500 ease-in-out bg-white rounded-2xl shadow-xs border border-gray-200" data-write-container>
+          <AnimatedCard index={0} className="transition-all duration-500 ease-in-out bg-white rounded-2xl shadow-xs border border-gray-200" data-write-container>
             <div className="p-4">
               {/* Avatar and Main Input Row */}
               <div className="flex items-center space-x-4">
@@ -331,7 +333,7 @@ export function CommunitySection() {
                 </div>
               </div>
             </div>
-          </div>
+          </AnimatedCard>
 
           {/* Navigation Tabs - Hidden on mobile */}
           <div className="hidden lg:flex items-center space-x-3 w-full">
@@ -400,7 +402,7 @@ export function CommunitySection() {
           </div>
 
           {/* Dynamic Posts */}
-          {[...userPosts, ...posts].slice(0, 3).map((post) => {
+          {[...userPosts, ...posts].slice(0, 3).map((post, index) => {
             const user = getUserById(post.userId);
             if (!user) {
               console.warn(`User not found for post ${post.id} with userId: ${post.userId}`);
@@ -413,7 +415,7 @@ export function CommunitySection() {
             const currentLikes = baseLikes + (isLiked ? 1 : 0);
             
             return (
-              <div key={post.id} className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
+              <AnimatedCard key={post.id} index={index + 1} className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
                 <PostAuthor 
                   user={user}
                   timeAgo={(() => {
@@ -463,7 +465,7 @@ export function CommunitySection() {
                     )}
                   </div>
                 </div>
-              </div>
+              </AnimatedCard>
             );
           })}
 
@@ -471,7 +473,7 @@ export function CommunitySection() {
 
         {/* Leaderboard - Right column on desktop, below posts on mobile */}
         <div className="lg:col-span-4">
-          <div className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
+          <AnimatedSection delay={0.3} direction="right" className="bg-white rounded-2xl shadow-xs border border-gray-200 p-6">
             {/* Leaderboard */}
             <div>
               <div className="flex items-center mb-4">
@@ -506,10 +508,10 @@ export function CommunitySection() {
                 ))}
               </div>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
 
-      </div>
+      </AnimatedSection>
     </div>
   );
 }

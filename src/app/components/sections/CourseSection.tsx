@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { getLessons, getLessonCount } from '@/data/lessons';
 import { WordsPullUp } from '../WordsPullUp';
+import { AnimatedCard } from '../AnimatedCard';
+import { AnimatedSection } from '../AnimatedSection';
 
 export function CourseSection() {
   const [expandedLesson, setExpandedLesson] = useState<number | null>(null);
@@ -28,7 +30,7 @@ export function CourseSection() {
         className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium"
       />
       
-      <div className="bg-white rounded-2xl shadow-xs overflow-hidden border border-gray-200">
+      <AnimatedCard className="bg-white rounded-2xl shadow-xs overflow-hidden border border-gray-200">
         {/* Course Header */}
         <div className="px-8 py-8 border-b border-gray-200">
           <h3 className="text-2xl font-bold text-black mb-2">AI Coding</h3>
@@ -36,7 +38,7 @@ export function CourseSection() {
         </div>
         
         {/* Course Lessons */}
-        <div>
+        <AnimatedSection delay={0.2} direction="up">
           {lessons.map((lesson, index) => (
             <div key={index} className="border-b border-gray-200 last:border-b-0">
               <div 
@@ -146,8 +148,8 @@ export function CourseSection() {
               </div>
             </div>
           ))}
-        </div>
-      </div>
+        </AnimatedSection>
+      </AnimatedCard>
     </div>
   );
 }

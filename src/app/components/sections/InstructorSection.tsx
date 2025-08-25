@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { AnimatedVideo } from '../AnimatedVideo';
+import { AnimatedSection } from '../AnimatedSection';
 
 export function InstructorSection() {
   return (
@@ -40,7 +41,7 @@ export function InstructorSection() {
       </div>
 
       {/* Instructor Section */}
-      <div className="w-full max-w-4xl">
+      <AnimatedSection delay={0.2} className="w-full max-w-4xl">
         <p className="text-[#626262] text-lg text-center mb-4" style={{ fontFamily: 'var(--font-caveat), cursive' }}>Hosted by</p>
         <div className="flex items-center justify-center">
           {/* Profile Image */}
@@ -96,7 +97,7 @@ export function InstructorSection() {
             </div>
           </div>
         </div>
-      </div>
+      </AnimatedSection>
     </>
   );
 }

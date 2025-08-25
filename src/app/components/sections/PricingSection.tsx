@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { MainButton } from '../MainButton';
 import { WordsPullUp } from '../WordsPullUp';
 import { AnimatedBadge } from '../AnimatedBadge';
+import { AnimatedCard } from '../AnimatedCard';
+import { AnimatedSection } from '../AnimatedSection';
 
 export function PricingSection() {
   return (
@@ -26,7 +28,7 @@ export function PricingSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
         
         {/* Monthly Plan */}
-        <div className="group bg-white rounded-2xl shadow-xs border border-gray-200 p-8 pt-20 relative flex flex-col mt-24">
+        <AnimatedCard index={0} className="group bg-white rounded-2xl shadow-xs border border-gray-200 p-8 pt-20 relative flex flex-col mt-24">
           {/* Overlapping Image */}
           <div className="absolute -top-20 left-4 w-56 h-auto z-10 transition-transform duration-300 group-hover:rotate-[7.64deg]">
             <Image
@@ -70,7 +72,7 @@ export function PricingSection() {
           {/* Separator Line */}
           <div className="border-t border-gray-200 my-8"></div>
           
-          <div className="space-y-4 mb-8 flex-grow">
+          <AnimatedSection delay={0.2} className="space-y-4 mb-8 flex-grow">
             <div className="flex items-center space-x-3">
               <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -107,7 +109,7 @@ export function PricingSection() {
               </svg>
               <span className="text-black">1:1 strategy session with Fabio (20 min)</span>
             </div>
-          </div>
+          </AnimatedSection>
           
           <div className="mt-auto">
             <MainButton 
@@ -117,10 +119,10 @@ export function PricingSection() {
               Join Today
             </MainButton>
           </div>
-        </div>
+        </AnimatedCard>
 
         {/* Yearly Plan */}
-        <div className="group bg-black rounded-2xl shadow-xs border border-gray-800 p-8 pt-20 relative flex flex-col mt-24">
+        <AnimatedCard index={1} className="group bg-black rounded-2xl shadow-xs border border-gray-800 p-8 pt-20 relative flex flex-col mt-24">
           {/* Overlapping Image */}
           <div className="absolute -top-20 left-4 w-56 h-auto z-10 transition-transform duration-300 group-hover:rotate-[7.64deg]">
             <Image
@@ -168,7 +170,7 @@ export function PricingSection() {
           {/* Separator Line */}
           <div className="border-t border-gray-300 my-8"></div>
           
-          <div className="space-y-4 mb-8 flex-grow">
+          <AnimatedSection delay={0.2} className="space-y-4 mb-8 flex-grow">
             <div className="flex items-center space-x-3">
               <svg className="w-5 h-5 text-[#3478F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -205,7 +207,7 @@ export function PricingSection() {
               </svg>
               <span className="text-white">1:1 strategy session with Fabio (40 min)</span>
             </div>
-          </div>
+          </AnimatedSection>
           
           <div className="mt-auto">
             <MainButton 
@@ -215,7 +217,7 @@ export function PricingSection() {
               Join Today
             </MainButton>
           </div>
-        </div>
+        </AnimatedCard>
       </div>
     </div>
   );
