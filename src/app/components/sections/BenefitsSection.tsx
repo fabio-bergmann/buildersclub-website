@@ -1,13 +1,19 @@
+import { WordsPullUp } from '../WordsPullUp';
+
 export function BenefitsSection() {
   return (
     <div className="w-full max-w-6xl mt-44">
       {/* Benefits Main Headline */}
-      <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Benefits</h2>
+      <WordsPullUp 
+        text="Benefits"
+        className="text-5xl md:text-6xl font-bold text-black text-center mb-6"
+      />
       
       {/* Benefits Subheadline */}
-      <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-        What you&apos;ll get when joining Builder&apos;s Club
-      </p>
+      <WordsPullUp 
+        text="What you'll get when joining Builder's Club"
+        className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium"
+      />
       
       {/* Benefits Grid - Responsive: 1 column mobile, 2 columns tablet, 3 columns desktop */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

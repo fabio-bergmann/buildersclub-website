@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getUserById, posts, getTopUsers } from '@/data/users';
 import { Avatar } from '../Avatar';
 import { PostAuthor, LeaderboardEntry } from '../UserProfile';
+import { WordsPullUp } from '../WordsPullUp';
 
 export function CommunitySection() {
   const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
@@ -186,12 +187,16 @@ export function CommunitySection() {
   return (
     <div className="w-full max-w-6xl mt-44">
       {/* Community Main Headline */}
-      <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Community</h2>
+      <WordsPullUp 
+        text="Community"
+        className="text-5xl md:text-6xl font-bold text-black text-center mb-6"
+      />
       
       {/* Community Subheadline */}
-      <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-        Connect with fellow builders and share your journey
-      </p>
+      <WordsPullUp 
+        text="Connect with fellow builders and share your journey"
+        className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium"
+      />
       
       {/* Community Interface Mockup */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

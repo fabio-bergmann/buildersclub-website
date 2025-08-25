@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { getLessons, getLessonCount } from '@/data/lessons';
+import { WordsPullUp } from '../WordsPullUp';
 
 export function CourseSection() {
   const [expandedLesson, setExpandedLesson] = useState<number | null>(null);
@@ -16,12 +17,16 @@ export function CourseSection() {
   return (
     <div className="w-full max-w-4xl mt-44">
       {/* Course Main Headline */}
-      <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">Course</h2>
+      <WordsPullUp 
+        text="Course"
+        className="text-5xl md:text-6xl font-bold text-black text-center mb-6"
+      />
       
       {/* Course Subheadline */}
-      <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-        Everything you need to become an AI builder
-      </p>
+      <WordsPullUp 
+        text="Everything you need to become an AI builder"
+        className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium"
+      />
       
       <div className="bg-white rounded-2xl shadow-xs overflow-hidden border border-gray-200">
         {/* Course Header */}

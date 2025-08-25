@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { WordsPullUp } from '../WordsPullUp';
 
 export function FAQSection() {
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
@@ -54,12 +55,16 @@ export function FAQSection() {
   return (
     <div className="w-full max-w-4xl mt-44">
       {/* FAQ Main Headline */}
-      <h2 className="text-5xl md:text-6xl font-bold text-black text-center mb-6">FAQ</h2>
+      <WordsPullUp 
+        text="FAQ"
+        className="text-5xl md:text-6xl font-bold text-black text-center mb-6"
+      />
       
       {/* FAQ Subheadline */}
-      <p className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-        Frequently asked questions about Builder&apos;s Club
-      </p>
+      <WordsPullUp 
+        text="Frequently asked questions about Builder's Club"
+        className="text-xl md:text-2xl text-[#626262] text-center max-w-3xl mx-auto mb-12 leading-relaxed font-medium"
+      />
       
       {/* FAQ Items */}
       <div className="w-full">

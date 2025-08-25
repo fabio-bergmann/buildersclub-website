@@ -7,10 +7,12 @@ export function WordsPullUp({
   text,
   className = '',
   delay = 0,
+  style,
 }: {
   text: string;
   className?: string;
   delay?: number;
+  style?: React.CSSProperties;
 }) {
   const splittedText = text.split(' ');
 
@@ -30,20 +32,15 @@ export function WordsPullUp({
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
   return (
-    <div className="flex justify-center">
+    <div className={cn("flex justify-center flex-wrap", className)} style={style} ref={ref}>
       {splittedText.map((current, i) => (
         <motion.div
           key={i}
-          ref={ref}
           variants={pullupVariant}
           initial="initial"
           animate={isInView ? 'animate' : ''}
           custom={i}
-          className={cn(
-            'text-xl text-center sm:text-4xl font-bold tracking-tighter md:text-6xl md:leading-[4rem]',
-            'pr-2', // class to sperate words
-            className
-          )}
+          className="pr-2"
         >
           {current == '' ? <span>&nbsp;</span> : current}
         </motion.div>
