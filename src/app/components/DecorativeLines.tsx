@@ -155,6 +155,9 @@ export function DecorativeLines({
     if (elementType === 'text') {
       return 20; // 20px extension for text/subheading elements
     }
+    if (elementType === 'button') {
+      return 60; // 60px extension for button elements (longer lines)
+    }
     return 30; // 30px extension for other elements
   };
   const extensionPx = getExtensionPx();
@@ -166,8 +169,9 @@ export function DecorativeLines({
     }
 
     // Vertical lines: extend above and below element
-    let verticalExtensionTop = extensionPx;
-    let verticalExtensionBottom = extensionPx;
+    // For buttons, use fixed 30px vertical extension regardless of horizontal extension
+    let verticalExtensionTop = elementType === 'button' ? 30 : extensionPx;
+    let verticalExtensionBottom = elementType === 'button' ? 30 : extensionPx;
     
     // Avatar-specific adjustments for vertical lines
     if (elementType === 'avatars') {
@@ -193,8 +197,8 @@ export function DecorativeLines({
       const letterCenterOffset = (dimensions.width - estimatedLetterWidth) / 2;
       
       // Position lines at calculated letter boundaries
-      leftVerticalPos = textCenterOffset + letterCenterOffset;
-      rightVerticalPos = textCenterOffset + dimensions.width - letterCenterOffset;
+      leftVerticalPos = textCenterOffset + letterCenterOffset + (leftOffset ?? 0);
+      rightVerticalPos = textCenterOffset + dimensions.width - letterCenterOffset + (rightOffset ?? 0);
       
       const desiredHorizontalWidth = dimensions.width + (extensionPx * 2);
       const maxAvailableWidth = containerWidth - 4; // Keep 2px margin on each side
