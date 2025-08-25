@@ -18,7 +18,7 @@ export function AnimatedBadge({
       transition: {
         delay,
         duration: 0.3,
-        ease: "easeOut"
+        ease: "easeOut" as const
       },
     },
   };

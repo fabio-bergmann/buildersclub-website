@@ -1,5 +1,4 @@
 "use client"
-import { cn } from '@/lib/utils';
 import { motion, useInView } from 'framer-motion';
 import * as React from 'react';
 import { MainButton } from './MainButton';
@@ -24,7 +23,7 @@ export function AnimatedButton({
       transition: {
         delay,
         duration: 0.3,
-        ease: "easeOut"
+        ease: "easeOut" as const
       },
     },
   };

@@ -18,7 +18,7 @@ export function AnimatedVideo({
       transition: {
         delay,
         duration: 0.3,
-        ease: "easeOut"
+        ease: "easeOut" as const
       },
     },
   };
