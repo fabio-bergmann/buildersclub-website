@@ -1,7 +1,7 @@
 export interface Lesson {
   title: string;
   description: string;
-  status: 'released' | 'coming-soon';
+  status: 'released' | 'this-week' | 'coming-soon';
 }
 
 export interface LessonWithNumber extends Lesson {
@@ -27,18 +27,13 @@ const lessonsData: Lesson[] = [
     description: "Get a walkthrough of the AI-powered X Post Generator we’ll build together in this course. You’ll see the app’s purpose, its core features—from training the AI on your writing style to generating and managing posts—and how it fits into the concept of an AI wrapper: a focused, user-friendly product built on top of powerful language models."
   },
   {
-    title: "Setup Cursor",
-    status: "coming-soon",
-    description: "Install Cursor from scratch and get comfortable navigating the interface. We’ll go through every setting and panel so you know exactly where everything is before we start coding."
-  },
-  {
-    title: "Setup Claude Code",
-    status: "coming-soon",
-    description: "Set up Claude Code inside Cursor and learn the basics of using it for code assistance. We’ll walk through the installation, configuration, and interface so you’re ready to work seamlessly with AI coding tools."
+    title: "Setup Cursor & Claude Code",
+    status: "released",
+    description: "Install Cursor and Claude Code (the best AI coding tools right now) from scratch and get comfortable navigating the interface. We’ll go through every setting and panel so you know exactly where everything is before we start coding."
   },
   {
     title: "Starter Template",
-    status: "coming-soon",
+    status: "this-week",
     description: "Learn how to start new projects with a ready-to-use Next.js template that includes built-in security, authentication, and project structure—so you never have to start from zero again."
   },
   {
