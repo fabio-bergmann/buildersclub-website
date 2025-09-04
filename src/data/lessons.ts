@@ -32,18 +32,18 @@ const lessonsData: Lesson[] = [
     description: "Install Cursor and Claude Code (the best AI coding tools right now) from scratch and get comfortable navigating the interface. We’ll go through every setting and panel so you know exactly where everything is before we start coding."
   },
   {
-    title: "Starter Template",
-    status: "this-week",
+    title: "Starting your Project",
+    status: "released",
     description: "Learn how to start new projects with a ready-to-use Next.js template that includes built-in security, authentication, and project structure—so you never have to start from zero again."
   },
   {
     title: "Next.js & Tech Basics",
-    status: "coming-soon",
+    status: "this-week",
     description: "Understand the core concepts of Next.js and how it powers both the frontend and backend of our application. You’ll learn enough to think and work like a product engineer, ready to build and scale real apps."
   },
   {
     title: "GitHub – Code Management",
-    status: "coming-soon",
+    status: "this-week",
     description: "Set up GitHub and learn modern version control workflows: creating branches, making pull requests, merging code, and managing deployments—all the skills you need to work efficiently alone or in a team."
   },
   {
